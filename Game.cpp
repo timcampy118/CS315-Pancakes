@@ -17,7 +17,7 @@ int main()
 	refresh();
 
 	// This code is necessary for ending the window.
-	getch()
+	getch();
 	endwin();
 
 	return 0;
