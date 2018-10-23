@@ -1,24 +1,93 @@
 #include <ncurses.h> 
+#include <vector>
+#include <iostream>
+#include "string.h"
+#include <fstream>
+#include <algorithm>
+#include "Player.h"
+#include "Game.h"
+#include "Game_Window.h"
+
+using namespace std;
+
+//reads in the highscores.txt
+//helper function to printHighScores
+vector<string> Game::readHighScores() {
+	string filename = "high_scores.txt";
+	ifstream ist{filename}; // ist reads from the file named iname
+	string entry;
+	vector<string> entries;
+	while (getline(ist, entry))
+		entries.push_back(entry);
+	ist.close();	
+	return entries;
+}
+//helper function to printHighScores
+vector<Player> Game::fillPlayerVector() {
+	vector<string> entries = readHighScores();
+	vector<Player> dummyPlayers;
+	int entriesSize = entries.size();
+	for (int index = 0; index < entriesSize; index++) {
+		string s = entries[index];
+		string tempInitials;
+		string tempScoreString = s.substr(s.find(" ") + 1);
+		int tempScore = stoi(tempScoreString);
+		
+		//grabs the intials by delimiting a space character
+		int entriesIndex = entries[index].size();
+		for (int j = 0; j < entriesIndex; j++) {
+			if (entries[index][j] != ' ') {
+				tempInitials.push_back(entries[index][j]);
+			}
+			else if (entries[index][j] == ' ') {
+				break;
+			}
+		}
+		Player highScorePlayer(tempInitials, tempScore);
+		dummyPlayers.push_back(highScorePlayer);
+	}
+	return dummyPlayers;
+}
+
+
+void Game::printHighScores(Player player) {
+	string filename = "high_scores.txt";
+	vector<string> entries = readHighScores();
+	vector<Player> dummyPlayers;
+	dummyPlayers = fillPlayerVector();
+	int dummyPlayersSize = dummyPlayers.size();
+	if (dummyPlayersSize == 0 || dummyPlayersSize < 5) {
+		dummyPlayers.push_back(player);
+	} else { //will eventually need to sort these high scores
+		for (int index = 0; index < dummyPlayersSize; index++) {
+			if (player.getScore() > dummyPlayers[index].getScore()) {
+				dummyPlayers[index] = player;
+				break;
+			}
+		}
+	}
+	sort(dummyPlayers.begin(), dummyPlayers.end());
+	ofstream ofs(filename);
+	for (Player p : dummyPlayers) {
+		ofs << p.getInitials() << " " << p.getScore() << endl;
+	}
+}
+
+
 
 int main()
 {
-	initscr();
+	// Game game = Game();
+	// vector<string> test;
 
-	// Write a string to the screen.
-	printw("Hellow World");
+	// test = game.readHighScores();
+	// Player yo = Player(75);
 
-	// Get the key code of what the user typed.
-	int c = getch();
+	// game.printHighScores(yo);
+	// test = game.readHighScores();
+	// for (int index = 0; index < test.size(); index++) {
+	// 	cout << test[index] << endl;
+	// }
 
-	// Print the code to the screen.
-	printw("%d", c);
-
-	// Refresh the window to reflect the 'c' that's in memory.
-	refresh();
-
-	// This code is necessary for ending the window.
-	getch();
-	endwin();
-
-	return 0;
+	// return 0;
 }

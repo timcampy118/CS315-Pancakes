@@ -6,6 +6,7 @@
 #include <curses.h>
 #include <menu.h>
 
+<<<<<<< HEAD
 #include <thread>
 #include <chrono>
 
@@ -20,6 +21,11 @@ class Game_Window {
 	void displayStartScreen();
 	void printPancakes(int x, int y);
 		
+=======
+class Game_Window {
+    public:
+        Game_Window() {}
+>>>>>>> 4518bed29edf3906919cf492ed99c573a60342f7
 };
 
 Game_Window::Game_Window(){
