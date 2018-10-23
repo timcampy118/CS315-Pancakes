@@ -54,91 +54,32 @@ void Game_Window::displayStartScreen(){
 	
 }
 
-vector<int> Game_Window::displaySetupScreen(int size)
-{
-        initscr();
-        noecho();
-        //cbreak();
-        timeout(0);
-        int x;
-
-
-
-        vector<int> order;
-        vector<int> remain;
-
-
-         for(int x=0; x<size; x++)
-        {
-                remain.push_back(x+1);
-        }
-        
-        while((int)(order.size())!=size)
-        {
+vector<int> Game_Window::displaySetupScreen(int size){
+        initscr(); noecho(); timeout(0); int x;
+        vector<int> order; vector<int> remain; vector<int> random;
+         for(int x=0; x<size; x++){
+                remain.push_back(x+1);}
+        while((int)(order.size())!=size){
                 move(x,0);
                 printw("Type in the next pancake 1-%d, type 0 for a random list",size);
-                x++;
-                int c=getch();
-                while(getch()!=10)
-                {
-                        int tmp=c;
-                        c=getch()-48;
+                x++;int c=getch();
+                while(getch()!=10){
+                        int tmp=c; c=getch()-48;
                         if(c==-38||c==tmp||c==-49)
                                 c=tmp;
-                        else
-                        {
+                        else{
                         move(0+x,0);
-                        printw("%d\n", c);
-                         x++;
-                        refresh();     
-                        }
-                        
-                }
-                if(c==0)
-                {
-                        vector<int> random;
-
-
-                         for(int x=0; x<size; x++)
-                        {
+                        printw("%d\n", c); x++;}}
+                if(c==0){       
+                        for(int x=0; x<size; x++)
                                 random.push_back(x);
-                        }
-                        random_shuffle(random.begin(), random.end());
-                        return random;
-
-                }
-                else if(c>0&&c<=(size))
-                {
-                        
-                       
-
-                        //if (find(remain.begin(), remain.end(), c) != remain.end() )
-                        //{
-                        //    move(0+x,0);
-                        //    printw("Number already used");
-                       // }
-                       // else
-                        //{
+                        return random_shuffle(random.begin(), random.end());}
+                else if(c>0&&c<=(size)){
                                 order.push_back(c);
-                                printw("Added");
-                                x++;
-                                //remain.erase((int)find(remain.begin(), remain.end()));
-
-//                        }
-                        
-                        
-                }
-                 else
-                {
-                        printw("Invalid input");     
-                }
-              
-        }
-        printw("Done");
-        return order;
-}
-
-
+                                printw("Added"); x++;}
+                else
+                printw("Invalid input");}
+        printw("Done"); return order;}
 
 /*
 vector<int> Game_Window::displaySetupScreen(int size)
