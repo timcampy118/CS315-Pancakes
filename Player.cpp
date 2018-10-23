@@ -2,7 +2,12 @@
 
 //returns player initials
 string Player::getInitials() {
-    return intials;
+    return initials;
+}
+
+//returns player score
+int Player::getScore() {
+    return score;
 }
 
 //returns player stack
