@@ -5,10 +5,20 @@
 #include <fstream>
 #include <algorithm>
 #include "Player.h"
-#include "Game.h"
 #include "Game_Window.h"
+#include "Game.h"
 
 using namespace std;
+
+// constructor
+Game::Game(){
+    player = Player();
+    computer = AI_Player();
+    window = Game_Window();
+    window.displayStartScreen();
+    numOfPancakes = 8;
+    diff = 1;
+}
 
 //reads in the highscores.txt
 //helper function to printHighScores
@@ -77,9 +87,9 @@ void Game::printHighScores(Player player) {
 
 int main()
 {
-	// Game game = Game();
+	Game game = Game();
 	// vector<string> test;
-
+	
 	// test = game.readHighScores();
 	// Player yo = Player(75);
 
@@ -89,5 +99,5 @@ int main()
 	// 	cout << test[index] << endl;
 	// }
 
-	// return 0;
+	return 0;
 }

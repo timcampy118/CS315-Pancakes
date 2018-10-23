@@ -6,6 +6,4 @@ class AI_Player {
         vector<int> stack;
 };
 
-
-
 #endif
