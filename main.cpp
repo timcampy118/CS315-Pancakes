@@ -1,15 +1,21 @@
 
 #include <iostream>
+#include <stdlib.h>
 #include <ncurses.h>
+#include <curses.h>
+#include <menu.h>
+
+#include <cstring>
+#include <string.h>
 #include "Game_Window.h"
 
 using namespace std;
 
-
 int main(){
-cout << "asdf" << endl;
 
+	Game_Window game1;
+	game1.displayStartScreen();
+	
 return 0;
 }
-
 
