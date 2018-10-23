@@ -83,21 +83,3 @@ void Game::printHighScores(Player player) {
 	}
 }
 
-
-
-int main()
-{
-	Game game = Game();
-	// vector<string> test;
-	
-	// test = game.readHighScores();
-	// Player yo = Player(75);
-
-	// game.printHighScores(yo);
-	// test = game.readHighScores();
-	// for (int index = 0; index < test.size(); index++) {
-	// 	cout << test[index] << endl;
-	// }
-
-	return 0;
-}
