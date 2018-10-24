@@ -15,9 +15,12 @@ Game::Game(){
     player = Player();
     computer = AI_Player();
     window = Game_Window();
+	highscoreRows = readHighScores();
     window.displayStartScreen();
     GameOptions options = window.queryGameOptions();
-    // TODO @timothy add your code here
+
+	window.getInitials(player);
+	window.printHighScores(highscoreRows, player);
 }
 
 //reads in the highscores.txt

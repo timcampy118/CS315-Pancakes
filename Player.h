@@ -14,7 +14,7 @@ class Player {
     public:
         Player() {
             initials = "NA";
-            score = 10;
+            score = 0;
         }
         Player(int scor) {
             score = scor;
@@ -42,6 +42,9 @@ class Player {
         }
         bool operator < (const Player& play) {
             return (score > play.score);
+        }
+        void setName(string inits) {
+            initials = inits;
         }
 };
 

@@ -199,3 +199,43 @@ void Game_Window::printPancakes(int y, int x){
         mvprintw(y+4, x, " |____|    (____  /___|  /\\___  >____ |__|_ \\___  >____  >");
         mvprintw(y+5, x, "                \\/     \\/     \\/     \\/    \\/   \\/     \\/ ");
 }
+
+void Game_Window::getInitials(Player& player) {
+	char printMessage[]="Please enter your initials: ";		/* message to be appeared on the screen */
+	char init[80];
+ 	int row,col;				/* to store the number of rows and *
+					 * the number of colums of the screen */
+ 	initscr();
+	clear();
+	echo();				/* start the curses mode */
+ 	getmaxyx(stdscr,row,col);		/* get the number of rows and columns */
+ 	mvprintw(row/2,(col-strlen(printMessage))/2,"%s",printMessage);
+
+ 	getstr(init);
+	string playerInitials(init);
+	player.setName(playerInitials);
+ 	//getch();
+ 	endwin();
+}
+
+void Game_Window::printHighScores(vector<string> entry, Player player) {
+	int row, col;
+	string line = "\n";
+	string space = " ";
+	initscr();
+	clear();
+	getmaxyx(stdscr, row, col);
+	int entrySize = entry.size();
+	for (int index = 0; index < entrySize; index++) {
+		entry[index] += '\n';
+		addstr(entry[index].c_str());
+		row++;
+	}
+	addstr(line.c_str());
+	addstr(player.getInitials().c_str());
+	addstr(space.c_str());
+	addstr(to_string(player.getScore()).c_str());
+	refresh();
+	getch();
+	endwin();
+}

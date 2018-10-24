@@ -12,6 +12,7 @@ class Game {
         Game_Window window;
         int numOfPancakes;
         int diff;
+        vector<string> highscoreRows;
     public:
         Game();
 	void printHighScores(Player player);
