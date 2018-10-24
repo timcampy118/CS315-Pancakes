@@ -5,7 +5,8 @@
 #include <ncurses.h>
 #include <curses.h>
 #include <menu.h>
-
+#include <algorithm>
+#include <vector>
 #include <thread>
 #include <chrono>
 #include <cstring>
@@ -70,27 +71,85 @@ GameOptions Game_Window::queryGameOptions(){
 		"Choice 4",
 		"Exit",
 	};
+	//int n_choices = choices.size();
+	//int highlight = 1;
+	//int choice = 0;
+	//int rows, cols = 0;
+	//int c;
+
+	//initscr();
+	//clear();
+	//noecho();
+	//cbreak();	/* Line buffering disabled. pass on everything */
+        //getmaxyx(stdscr,rows,cols);
+	//WINDOW* menu_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
+	//keypad(menu_win, TRUE);
+	//mvprintw(0, 0, "Please select the number of pancakes using your arrow keys. Press enter on your choice.");
+	//refresh();
+	//printMenu(menu_win, highlight, numChoices);
+	//while(1)
+	//{	c = wgetch(menu_win);
+	//	switch(c)
+	//	{	case KEY_UP:
+	//			if(highlight == 1)
+	//				highlight = n_choices;
+	//			else
+	//				--highlight;
+	//			break;
+	//		case KEY_DOWN:
+	//			if(highlight == n_choices)
+	//				highlight = 1;
+	//			else 
+	//				++highlight;
+	//			break;
+	//		case 10:
+	//			choice = highlight;
+	//			break;
+	//		default:
+	//			mvprintw(24, 0, "Charcter pressed is = %3d Hopefully it can be printed as '%c'", c, c);
+	//			refresh();
+	//			break;
+	//	}
+	//	printMenu(menu_win, highlight, choices);
+	//	if(choice != 0){
+	//		break;
+	//	}
+	//}	
+	//mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
+	//clrtoeol();
+	//refresh();
+	//endwin();
+	//return choices[choice-1];
+	GameOptions b = GameOptions();
+	return b;
+}
+
+// Function takes in a list of numbers and a message, and asks which number the user would like to use.
+// Returns what the user chose.
+int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
+	vector<std::string> str_choices;
 	int n_choices = choices.size();
+
+	for (int i = 0; i < n_choices; i++) {
+		str_choices.push_back(std::to_string(choices[i]));
+	}
 	int highlight = 1;
 	int choice = 0;
 	int rows, cols = 0;
-	int c;
+	int input_char;
 
 	initscr();
 	clear();
 	noecho();
-	cbreak();	/* Line buffering disabled. pass on everything */
-
+	cbreak();
         getmaxyx(stdscr,rows,cols);
-
 	WINDOW* menu_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
 	keypad(menu_win, TRUE);
-	mvprintw(0, 0, "Please select the number of pancakes using your arrow keys. Press enter on your choice.");
-	refresh();
-	printMenu(menu_win, highlight, numChoices);
-	while(1)
-	{	c = wgetch(menu_win);
-		switch(c)
+	mvprintw(0, 0, message.c_str());
+	printMenu(menu_win, highlight, str_choices);
+	while(1){	
+		input_char = wgetch(menu_win);
+		switch(input_char)
 		{	case KEY_UP:
 				if(highlight == 1)
 					highlight = n_choices;
@@ -107,11 +166,11 @@ GameOptions Game_Window::queryGameOptions(){
 				choice = highlight;
 				break;
 			default:
-				mvprintw(24, 0, "Charcter pressed is = %3d Hopefully it can be printed as '%c'", c, c);
+				mvprintw(24, 0, "Charcter pressed is = %3d Hopefully it can be printed as '%c'", input_char, input_char);
 				refresh();
 				break;
 		}
-		printMenu(menu_win, highlight, choices);
+		printMenu(menu_win, highlight, str_choices);
 		if(choice != 0)	/* User did a choice come out of the infinite loop */
 			break;
 	}	
@@ -119,10 +178,40 @@ GameOptions Game_Window::queryGameOptions(){
 	clrtoeol();
 	refresh();
 	endwin();
+	return choices[choice-1];
 }
 
-// function that takes in a list of integers, and returns the integer that was chosen.
-int chooseInteger(
+vector<int> Game_Window::displaySetupScreen(int size){
+        initscr(); noecho(); timeout(0); int x;
+        vector<int> order; vector<int> remain; vector<int> random;
+         for(int x=0; x<size; x++){
+                remain.push_back(x+1);}
+        while((int)(order.size())!=size){
+                move(x,0);
+                printw("Type in the next pancake 1-%d, type 0 for a random list",size);
+                x++;int c=getch();
+                while(getch()!=10){
+                        int tmp=c; c=getch()-48;
+                        if(c==-38||c==tmp||c==-49)
+                                c=tmp;
+                        else{
+                        move(0+x,0);
+                        printw("%d\n", c); x++;}}
+                if(c==0){       
+                        for(int x=0; x<size; x++){
+                                random.push_back(x);
+			}
+                        random_shuffle(random.begin(), random.end());
+			return random;
+		}
+                else if(c>0&&c<=(size)){
+                                order.push_back(c);
+                                printw("Added"); x++;}
+                else
+                printw("Invalid input");}
+        printw("Done"); 
+	return order;
+}
 
 WINDOW* Game_Window::create_newwin(int height, int width, int starty, int startx)
 {       
