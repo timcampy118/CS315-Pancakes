@@ -18,7 +18,17 @@ class Game_Window {
         Game_Window();
 	WINDOW *create_newwin(int height, int width, int starty, int startx);
 	void displayStartScreen();
+	void queryGameOptions();
 	void printPancakes(int x, int y);
+    private:
+	void printMenu(WINDOW *menu_win, int highlight, vector<std::string> choices);
 };
+
+// Struct to hold the options provided by the user.
+struct GameOptions {
+	int numPancakes;
+	int difficultyLevel;
+}
+
 
 #endif

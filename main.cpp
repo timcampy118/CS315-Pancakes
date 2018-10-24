@@ -14,7 +14,7 @@ using namespace std;
 int main(){
 
 	Game_Window game1;
-	game1.displayStartScreen();
+	game1.queryGameOptions();
 	
 return 0;
 }
