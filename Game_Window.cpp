@@ -125,44 +125,103 @@ int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
 	return choices[choice-1];
 }
 
-vector<int> Game_Window::displaySetupScreen(int size){
+
+int Game_Window::chooseNumbersSetup(std::vector<int> choices, std::string message) {
+	vector<std::string> str_choices;
+	int n_choices = choices.size();
+
+	for (int i = 0; i < n_choices; i++) {
+		str_choices.push_back(std::to_string(choices[i]));
+	}
+
+	int highlight = 1;
+	int choice = 0;
+	int rows, cols = 0;
+	int input_char;
+
 	initscr();
 	clear();
 	noecho();
 	cbreak();
-	int x;
-        vector<int> order; vector<int> remain; vector<int> random;
-         for(int x=0; x<size; x++){
-                remain.push_back(x+1);}
-        while((int)(order.size())!=size){
-                move(x,0);
-                printw("Type in the next pancake 1-%d, type 0 for a random list",size);
-                x++;int c=getch();
-                while(getch()!=10){
-                        int tmp=c; c=getch()-48;
-                        if(c==-38||c==tmp||c==-49)
-                                c=tmp;
-                        else{
-                        move(0+x,0);
-                        printw("%d\n", c); x++;}}
-                if(c==0){       
-                        for(int x=0; x<size; x++){
-                                random.push_back(x);
-			}
-                        random_shuffle(random.begin(), random.end());
-			return random;
+        getmaxyx(stdscr,rows,cols);
+	WINDOW* menu_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
+	keypad(menu_win, TRUE);
+	mvprintw(0, 0, message.c_str());
+	refresh();
+	printMenu(menu_win, highlight, str_choices);
+	while(1){	
+		input_char = wgetch(menu_win);
+		switch(input_char)
+		{	case KEY_UP:
+				if(highlight == 1)
+					highlight = n_choices;
+				else
+					--highlight;
+				break;
+			case KEY_DOWN:
+				if(highlight == n_choices)
+					highlight = 1;
+				else 
+					++highlight;
+				break;
+			case 10:
+				choice = highlight;
+				break;
+			default:
+				mvprintw(24, 0, "Charcter pressed is = %3d Hopefully it can be printed as '%c'", input_char, input_char);
+				refresh();
+				break;
 		}
-                else if(c>0&&c<=(size)){
-                                order.push_back(c);
-                                printw("Added"); x++;}
-                else
-                printw("Invalid input");}
-        printw("Done"); 
+		printMenu(menu_win, highlight, str_choices);
+		if(choice != 0)	/* User did a choice come out of the infinite loop */
+			break;
+	}	
 	clrtoeol();
 	refresh();
 	endwin();
-	return order;
+	return choice-1;
 }
+
+
+vector<int> Game_Window::displaySetupScreen(int size)
+{
+	initscr();
+	clear();
+	noecho();
+	cbreak();
+
+	vector<int> order; 
+	vector<int> newOrder;
+	vector<int> random;
+	for(int x=0; x<size+1; x++)
+	{
+       	order.push_back(x);
+   	}
+
+   	string msg= "Type in the next pancake 1-";
+   	msg+=size;
+   	msg+=", type 0 for a random list";		
+	
+	while(newOrder.size()!=size)
+	{
+		int index=chooseNumbersSetup(order,msg);
+		if(index==0)
+		{
+			for(int x=0; x<size; x++)
+                random.push_back(x);
+            random_shuffle(random.begin(), random.end());
+			return random;
+		}
+		else
+		{
+			newOrder.push_back(order[index]);
+			order.erase(order.begin()+index);
+		}
+	}
+	return newOrder;
+
+}
+
 
 WINDOW* Game_Window::create_newwin(int height, int width, int starty, int startx)
 {       

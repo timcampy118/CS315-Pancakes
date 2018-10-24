@@ -27,6 +27,7 @@ class Game_Window {
         Game_Window();
 	WINDOW *create_newwin(int height, int width, int starty, int startx);
 	int chooseNumbers(std::vector<int> choices, std::string message);
+	int chooseNumbersSetup(std::vector<int> choices, std::string message);
 	void displayStartScreen();
 	GameOptions queryGameOptions();
 	void printPancakes(int x, int y);
