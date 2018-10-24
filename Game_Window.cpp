@@ -55,7 +55,7 @@ void Game_Window::displayStartScreen(){
 
 GameOptions Game_Window::queryGameOptions(){
 	GameOptions options = GameOptions();
-	vector<int> pancakeChoices = {2,3,5,6,7,8,9};
+	vector<int> pancakeChoices = {2,3,4,5,6,7,8,9};
 	int pancakeChoice = chooseNumbers(pancakeChoices, "Please choose the number of pancakes");
 	vector<int> difficultyChoices;
 	for (int i = 1; i <= pancakeChoice; i++) {
