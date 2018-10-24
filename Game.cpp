@@ -15,12 +15,12 @@ Game::Game(){
     player = Player();
     computer = AI_Player();
     window = Game_Window();
-	highscoreRows = readHighScores();
+    highscoreRows = readHighScores();
     window.displayStartScreen();
     GameOptions options = window.queryGameOptions();
-
-	window.getInitials(player);
-	window.printHighScores(highscoreRows, player);
+    window.displaySetupScreen(options.numPancakes);
+    window.getInitials(player);
+    window.printHighScores(highscoreRows, player);
 }
 
 //reads in the highscores.txt

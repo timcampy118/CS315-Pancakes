@@ -126,7 +126,11 @@ int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
 }
 
 vector<int> Game_Window::displaySetupScreen(int size){
-        initscr(); noecho(); timeout(0); int x;
+	initscr();
+	clear();
+	noecho();
+	cbreak();
+	int x;
         vector<int> order; vector<int> remain; vector<int> random;
          for(int x=0; x<size; x++){
                 remain.push_back(x+1);}
@@ -154,6 +158,9 @@ vector<int> Game_Window::displaySetupScreen(int size){
                 else
                 printw("Invalid input");}
         printw("Done"); 
+	clrtoeol();
+	refresh();
+	endwin();
 	return order;
 }
 
