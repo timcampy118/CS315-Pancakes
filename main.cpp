@@ -8,14 +8,13 @@
 #include <cstring>
 #include <string.h>
 #include "Game_Window.h"
+#include "Game.h"
 
 using namespace std;
 
 int main(){
-
-	Game_Window game1;
-	game1.displayStartScreen();
-	game1.displaySetupScreen(6);
+	Game* game = new Game();
+	delete game;
 	return 0;
 }
 
