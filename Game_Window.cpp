@@ -51,77 +51,21 @@ void Game_Window::displayStartScreen(){
         }
 
         mvprintw(25, 0, "Started");
-        getch();
         endwin();
-	
 }
 
 GameOptions Game_Window::queryGameOptions(){
-	vector<std::string> pancakeChoices = { 
-		"Choice 1",
-		"Choice 2",
-		"Choice 3",
-		"Choice 4",
-		"Exit",
-	};
-	vector<std::string> difficultyChoices = { 
-		"Choice 1",
-		"Choice 2",
-		"Choice 3",
-		"Choice 4",
-		"Exit",
-	};
-	//int n_choices = choices.size();
-	//int highlight = 1;
-	//int choice = 0;
-	//int rows, cols = 0;
-	//int c;
-
-	//initscr();
-	//clear();
-	//noecho();
-	//cbreak();	/* Line buffering disabled. pass on everything */
-        //getmaxyx(stdscr,rows,cols);
-	//WINDOW* menu_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
-	//keypad(menu_win, TRUE);
-	//mvprintw(0, 0, "Please select the number of pancakes using your arrow keys. Press enter on your choice.");
-	//refresh();
-	//printMenu(menu_win, highlight, numChoices);
-	//while(1)
-	//{	c = wgetch(menu_win);
-	//	switch(c)
-	//	{	case KEY_UP:
-	//			if(highlight == 1)
-	//				highlight = n_choices;
-	//			else
-	//				--highlight;
-	//			break;
-	//		case KEY_DOWN:
-	//			if(highlight == n_choices)
-	//				highlight = 1;
-	//			else 
-	//				++highlight;
-	//			break;
-	//		case 10:
-	//			choice = highlight;
-	//			break;
-	//		default:
-	//			mvprintw(24, 0, "Charcter pressed is = %3d Hopefully it can be printed as '%c'", c, c);
-	//			refresh();
-	//			break;
-	//	}
-	//	printMenu(menu_win, highlight, choices);
-	//	if(choice != 0){
-	//		break;
-	//	}
-	//}	
-	//mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
-	//clrtoeol();
-	//refresh();
-	//endwin();
-	//return choices[choice-1];
-	GameOptions b = GameOptions();
-	return b;
+	GameOptions options = GameOptions();
+	vector<int> pancakeChoices = {2,3,5,6,7,8,9};
+	int pancakeChoice = chooseNumbers(pancakeChoices, "Please choose the number of pancakes");
+	vector<int> difficultyChoices;
+	for (int i = 1; i <= pancakeChoice; i++) {
+		difficultyChoices.push_back(i);
+	}
+	int difficultyChoice = chooseNumbers(difficultyChoices, "Please choose the difficulty");
+	options.numPancakes = pancakeChoice;
+	options.difficultyLevel = difficultyChoice;
+	return options;
 }
 
 // Function takes in a list of numbers and a message, and asks which number the user would like to use.
@@ -133,6 +77,7 @@ int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
 	for (int i = 0; i < n_choices; i++) {
 		str_choices.push_back(std::to_string(choices[i]));
 	}
+
 	int highlight = 1;
 	int choice = 0;
 	int rows, cols = 0;
@@ -146,6 +91,7 @@ int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
 	WINDOW* menu_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
 	keypad(menu_win, TRUE);
 	mvprintw(0, 0, message.c_str());
+	refresh();
 	printMenu(menu_win, highlight, str_choices);
 	while(1){	
 		input_char = wgetch(menu_win);
@@ -174,7 +120,6 @@ int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
 		if(choice != 0)	/* User did a choice come out of the infinite loop */
 			break;
 	}	
-	mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
 	clrtoeol();
 	refresh();
 	endwin();
