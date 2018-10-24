@@ -7,8 +7,6 @@
 #include <menu.h>
 #include <algorithm>
 #include <vector>
-#include <thread>
-#include <chrono>
 #include <cstring>
 #include <string.h>
 #include "Player.h"
@@ -38,19 +36,20 @@ void Game_Window::displayStartScreen(){
 
         int choice = 0;
         while(true){
-                wattron(my_win, A_REVERSE);
+                wattron(my_win, A_BLINK);
                 mvwprintw(my_win, 1, 1, "Press ENTER to start");
-		std::this_thread::sleep_for(std::chrono::milliseconds(200));
-                wattroff(my_win, A_REVERSE);
-		std::this_thread::sleep_for(std::chrono::milliseconds(200));
-		choice = wgetch(my_win);
+				choice = wgetch(my_win);
                 if(choice == 10){
                         break;
                 }
                 wrefresh(my_win);
         }
-
-        mvprintw(25, 0, "Started");
+        mvprintw(25, 0, "The goal of the game is to get the pancakes");
+        mvprintw(26, 0, "in an ordered stack with the largest on the bottom");
+        mvprintw(27, 0, "and the smallest on top, and beat the AI by having");
+        mvprintw(28, 0, "less moves. The catch is, you can only sort");
+        mvprintw(29, 0, "pancakes by repeatedly flipping a partial top");
+        mvprintw(30, 0, "of the stack.");
         endwin();
 }
 
