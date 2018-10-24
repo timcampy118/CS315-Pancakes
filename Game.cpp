@@ -16,8 +16,8 @@ Game::Game(){
     computer = AI_Player();
     window = Game_Window();
     window.displayStartScreen();
-    numOfPancakes = 8;
-    diff = 1;
+    GameOptions options = window.queryGameOptions();
+    // TODO @timothy add your code here
 }
 
 //reads in the highscores.txt
