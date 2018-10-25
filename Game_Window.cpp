@@ -87,7 +87,7 @@ int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
 	noecho();
 	cbreak();
         getmaxyx(stdscr,rows,cols);
-	WINDOW* menu_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
+	WINDOW* menu_win = create_newwin(choices.size()+4, WIDTH, (rows/2)-12, (cols/2)-3);
 	keypad(menu_win, TRUE);
 	mvprintw(0, 0, message.c_str());
 	refresh();
@@ -136,20 +136,21 @@ int Game_Window::chooseNumbersSetup(std::vector<int> choices, std::string messag
 
 	int highlight = 1;
 	int choice = 0;
-	int rows, cols = 0;
+	int yMax, xMax;
 	int input_char;
 
 	initscr();
 	clear();
 	noecho();
 	cbreak();
-        getmaxyx(stdscr,rows,cols);
-	WINDOW* menu_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
+    getmaxyx(stdscr,xMax,yMax);
+	WINDOW* menu_win = newwin(choices.size()+4, 15, (xMax/2), (yMax/2));
 	keypad(menu_win, TRUE);
 	mvprintw(0, 0, message.c_str());
 	refresh();
 	printMenu(menu_win, highlight, str_choices);
-	while(1){	
+	while(true)
+	{	
 		input_char = wgetch(menu_win);
 		switch(input_char)
 		{	case KEY_UP:
@@ -173,7 +174,7 @@ int Game_Window::chooseNumbersSetup(std::vector<int> choices, std::string messag
 				break;
 		}
 		printMenu(menu_win, highlight, str_choices);
-		if(choice != 0)	/* User did a choice come out of the infinite loop */
+		if(choice != 0)	
 			break;
 	}	
 	clrtoeol();
@@ -198,11 +199,9 @@ vector<int> Game_Window::displaySetupScreen(int size)
        	order.push_back(x);
    	}
 
-   	string msg= "Type in the next pancake 1-";
-   	msg+=size;
-   	msg+=", type 0 for a random list";		
+   	string msg= "Type in the next pancake 1-"+ to_string(size)+", enter 0 for a random list";		
 	
-	while(newOrder.size()!=size)
+	while((int)newOrder.size()!=size)
 	{
 		int index=chooseNumbersSetup(order,msg);
 		if(index==0)
