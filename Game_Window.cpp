@@ -89,22 +89,19 @@ int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
 		str_choices.push_back(std::to_string(choices[i]));
 	}
 
-	int highlight = 1;
-	int choice = 0;
-	int rows, cols = 0;
-	int input_char;
+	int highlight = 1, choice = 0, rows, cols = 0, input_char;
 
 	initscr();
 	clear();
 	noecho();
 	cbreak();
-        getmaxyx(stdscr,rows,cols);
+    getmaxyx(stdscr,rows,cols);
 	WINDOW* menu_win = create_newwin(choices.size()+4, WIDTH, (rows/2)-12, (cols/2)-3);
 	keypad(menu_win, TRUE);
 	mvprintw(0, 0, message.c_str());
 	refresh();
 	printMenu(menu_win, highlight, str_choices);
-	while(1){	
+	while(true){	
 		input_char = wgetch(menu_win);
 		switch(input_char)
 		{	case KEY_UP:
@@ -147,11 +144,7 @@ int Game_Window::chooseNumbersSetup(std::vector<int> choices, std::string messag
 		str_choices.push_back(std::to_string(choices[i]));
 	}
 
-	int highlight = 1;
-	int choice = 0;
-	int yMax, xMax;
-	int input_char;
-
+	int highlight = 1, choice = 0, yMax, xMax, input_char;
 	initscr();
 	clear();
 	noecho();
@@ -229,21 +222,16 @@ vector<int> Game_Window::displaySetupScreen(int size)
 WINDOW* Game_Window::create_newwin(int height, int width, int starty, int startx)
 {       
 	WINDOW *local_win;
-
-        local_win = newwin(height, width, starty, startx);
-        box(local_win, 0 , 0);
-        wrefresh(local_win);
-
-        return local_win;
+    local_win = newwin(height, width, starty, startx);
+    box(local_win, 0 , 0);
+    wrefresh(local_win);
+	return local_win;
 }
 
 void Game_Window::printMenu(WINDOW *menu_win, int highlight, vector<std::string> choices)
 {
 	int n_choices = choices.size();
-	int x, y, i;	
-
-	x = 2;
-	y = 2;
+	int x = 2, y = 2, i;	
 	box(menu_win, 0, 0);
 	for(i = 0; i < n_choices; ++i)
 	{	if(highlight == i + 1) /* High light the present choice */
