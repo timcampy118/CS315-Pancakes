@@ -17,6 +17,7 @@ Game::Game(){
     window = Game_Window();
     highscoreRows = readHighScores();
     window.displayStartScreen();
+	window.displayInstructions();
     GameOptions options = window.queryGameOptions();
     window.displaySetupScreen(options.numPancakes);
     window.getInitials(player);

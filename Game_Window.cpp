@@ -18,13 +18,12 @@ Game_Window::Game_Window() {
 	return;
 }
 
+//passes 24 line test
 void Game_Window::displayStartScreen(){
-	int rows, cols = 0;
+	int rows, cols = 0, choice = 0;
         WINDOW *my_win;
-
         initscr();
         getmaxyx(stdscr,rows,cols);
-        cout << rows << endl;
 
         printPancakes(0,0);
         mvprintw(7, 0, "Team Teamwork (18)");
@@ -33,8 +32,6 @@ void Game_Window::displayStartScreen(){
 
         my_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
         keypad(my_win,true);
-
-        int choice = 0;
         while(true){
                 wattron(my_win, A_BLINK);
                 mvwprintw(my_win, 1, 1, "Press ENTER to start");
@@ -44,15 +41,28 @@ void Game_Window::displayStartScreen(){
                 }
                 wrefresh(my_win);
         }
-        mvprintw(25, 0, "The goal of the game is to get the pancakes");
-        mvprintw(26, 0, "in an ordered stack with the largest on the bottom");
-        mvprintw(27, 0, "and the smallest on top, and beat the AI by having");
-        mvprintw(28, 0, "less moves. The catch is, you can only sort");
-        mvprintw(29, 0, "pancakes by repeatedly flipping a partial top");
-        mvprintw(30, 0, "of the stack.");
         endwin();
 }
 
+//passes 24 line test
+void Game_Window::displayInstructions() {
+	int rows, col;
+	initscr();
+	clear();
+	getmaxyx(stdscr, rows, col);
+	mvprintw(rows/2 - 3, (col/2) - 25, "INSTRUCTIONS:");
+	mvprintw((rows/2),((col)/2) - 25, "The goal of the game is to get the pancakes");
+    mvprintw((rows/2) + 1,((col)/2) - 25, "in an ordered stack with the largest on the bottom");
+    mvprintw((rows/2) + 2,((col)/2) - 25, "and the smallest on top, and beat the AI by having");
+    mvprintw((rows/2) + 3,((col)/2) - 25, "less moves. The catch is, you can only sort");
+    mvprintw((rows/2) + 4,((col)/2) - 25, "pancakes by repeatedly flipping a partial top");
+    mvprintw((rows/2) + 5,((col)/2) - 25, "of the stack.");
+	refresh();
+	getch();
+	endwin();
+}
+
+//passes 24 line test 
 GameOptions Game_Window::queryGameOptions(){
 	GameOptions options = GameOptions();
 	vector<int> pancakeChoices = {2,3,4,5,6,7,8,9};
@@ -69,6 +79,8 @@ GameOptions Game_Window::queryGameOptions(){
 
 // Function takes in a list of numbers and a message, and asks which number the user would like to use.
 // Returns what the user chose.
+
+//needs some mad revisions to get under 24 lines 
 int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
 	vector<std::string> str_choices;
 	int n_choices = choices.size();
@@ -126,6 +138,7 @@ int Game_Window::chooseNumbers(std::vector<int> choices, std::string message) {
 }
 
 
+//needs some mad revisions to get under 24 lines 
 int Game_Window::chooseNumbersSetup(std::vector<int> choices, std::string message) {
 	vector<std::string> str_choices;
 	int n_choices = choices.size();
@@ -184,6 +197,7 @@ int Game_Window::chooseNumbersSetup(std::vector<int> choices, std::string messag
 }
 
 
+//passes 24 lines 
 vector<int> Game_Window::displaySetupScreen(int size)
 {
 	initscr();
@@ -191,34 +205,24 @@ vector<int> Game_Window::displaySetupScreen(int size)
 	noecho();
 	cbreak();
 
-	vector<int> order; 
-	vector<int> newOrder;
-	vector<int> random;
-	for(int x=0; x<size+1; x++)
-	{
-       	order.push_back(x);
-   	}
+	vector<int> order, newOrder, random;
+	for(int x=0; x<size+1; x++) {order.push_back(x);}
 
    	string msg= "Type in the next pancake 1-"+ to_string(size)+", enter 0 for a random list";		
 	
-	while((int)newOrder.size()!=size)
-	{
+	while((int)newOrder.size()!=size) {
 		int index=chooseNumbersSetup(order,msg);
-		if(index==0)
-		{
+		if(index==0) {
 			for(int x=0; x<size; x++)
                 random.push_back(x);
             random_shuffle(random.begin(), random.end());
 			return random;
-		}
-		else
-		{
+		} else {
 			newOrder.push_back(order[index]);
 			order.erase(order.begin()+index);
 		}
 	}
 	return newOrder;
-
 }
 
 

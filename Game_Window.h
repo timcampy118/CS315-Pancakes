@@ -35,6 +35,7 @@ class Game_Window {
 	void printMenu(WINDOW *menu_win, int highlight, vector<std::string> choices);
 	void getInitials(Player& player);
 	void printHighScores(vector<string> entry, Player player);
+	void displayInstructions();
 };
 
 #endif
