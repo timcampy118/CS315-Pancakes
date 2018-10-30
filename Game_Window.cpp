@@ -30,7 +30,7 @@ void Game_Window::displayStartScreen(){
         mvprintw(rows-1, 0, "Jack Shirley, Jay Khatri, Zackary Ramirez, Timothy Nguyen");
         refresh();
 
-        my_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
+        my_win = create_newwin(HEIGHT, WIDTH, (rows/2) - 3, (cols/2)-25);
         keypad(my_win,true);
         while(true){
                 wattron(my_win, A_BLINK);
@@ -191,8 +191,7 @@ int Game_Window::chooseNumbersSetup(std::vector<int> choices, std::string messag
 
 
 //passes 24 lines 
-vector<int> Game_Window::displaySetupScreen(int size)
-{
+vector<int> Game_Window::displaySetupScreen(int size) {
 	initscr();
 	clear();
 	noecho();
