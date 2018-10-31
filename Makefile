@@ -12,17 +12,17 @@ Player.o: Player.cpp
 main.o: main.cpp
 	g++-8.2.0 -std=c++2a -Wall -Wextra -pedantic -fsanitize=address,undefined,pointer-compare,pointer-subtract -fstack-clash-protection -g -fno-omit-frame-pointer -lncurses++ -lmenu -lpanel -lform -lutil -lncurses -c -g main.cpp
 
-pancakes: Game.o Game_Window.o Player.o main.o
-	g++-8.2.0 -std=c++2a -Wall -Wextra -pedantic -fsanitize=address,undefined,pointer-compare,pointer-subtract -fstack-clash-protection -g -fno-omit-frame-pointer -lncurses++ -lmenu -lpanel -lform -lutil -lncurses -o pancakes Game_Window.o Game.o main.o Player.o 
-
 test_main.o: test_main.cpp
 	g++-8.2.0 -std=c++2a -Wall -Wextra -pedantic -fsanitize=address,undefined,pointer-compare,pointer-subtract -fstack-clash-protection -g -fno-omit-frame-pointer -lncurses++ -lmenu -lpanel -lform -lutil -lncurses -c -g test_main.cpp
 
-run:
-	./pancakes
+pancakes: Game.o Game_Window.o Player.o main.o
+	g++-8.2.0 -std=c++2a -Wall -Wextra -pedantic -fsanitize=address,undefined,pointer-compare,pointer-subtract -fstack-clash-protection -g -fno-omit-frame-pointer -lncurses++ -lmenu -lpanel -lform -lutil -lncurses -o pancakes Game_Window.o Game.o main.o Player.o 
 
 test: Game.o Game_Window.o Player.o test_main.o
 	g++-8.2.0 -std=c++2a -Wall -Wextra -pedantic -fsanitize=address,undefined,pointer-compare,pointer-subtract -fstack-clash-protection -g -fno-omit-frame-pointer -lncurses++ -lmenu -lpanel -lform -lutil -lncurses -o test Game_Window.o Game.o test_main.o Player.o
+
+run:
+	./pancakes
 
 clean:
 	rm *.o test pancakes
