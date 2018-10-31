@@ -14,8 +14,22 @@
 #define WIDTH 30
 #define HEIGHT 10 
 
+//exceptions
+
+struct IncorrectInitials : public exception {
+	const char* what() const throw() {
+		return "Too few or too many initials, Please enter 1-3 letters.";
+	}
+};
+
 Game_Window::Game_Window() {
 	return;
+}
+
+void repetitiveWindowCommandsEcho() {
+	 	initscr();
+		clear();
+		echo();	
 }
 
 //passes 24 line test
@@ -256,19 +270,28 @@ void Game_Window::printPancakes(int y, int x){
 }
 
 void Game_Window::getInitials(Player& player) {
-	char printMessage[]="Please enter your initials: ";	
-	char init[80];
- 	int row,col;
- 	initscr();
-	clear();
-	echo();	
- 	getmaxyx(stdscr,row,col);
- 	mvprintw(row/2,(col-strlen(printMessage))/2,"%s",printMessage);
-
- 	getstr(init);
-	string playerInitials(init);
-	player.setName(playerInitials);
- 	endwin();
+		char printMessage[]="Please enter your initials: ";	
+		char init[80];
+ 		int row,col;
+		repetitiveWindowCommandsEcho();
+ 		getmaxyx(stdscr,row,col);
+	try {
+ 		mvprintw(row/2,(col-strlen(printMessage))/2,"%s",printMessage);
+ 		getstr(init);
+		string playerInitials(init);
+		if (playerInitials.size() < 1 || playerInitials.size() > 3) {
+			throw IncorrectInitials();
+		}
+		player.setName(playerInitials);
+ 		endwin();
+	}
+	catch (IncorrectInitials& e) {
+		mvprintw((row/2) + 3,(col-strlen(printMessage))/2, e.what());
+		refresh();
+		getch();
+		endwin();
+		getInitials(player);
+	}
 }
 
 void Game_Window::printHighScores(vector<string> entry, Player player) {
