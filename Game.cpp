@@ -21,6 +21,8 @@ Game::Game(){
 	window.displayInstructions();
     GameOptions options = window.queryGameOptions();
     window.displaySetupScreen(options.numPancakes);
+	cout << player.getStack().size() << " " << computer.getStack().size() << endl;
+	window.renderStacks(player.getStack(), computer.getStack());
     window.getInitials(player);
     window.printHighScores(highscoreRows, player);
 }
