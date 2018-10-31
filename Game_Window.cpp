@@ -296,8 +296,7 @@ void Game_Window::getInitials(Player& player) {
 
 void Game_Window::printHighScores(vector<string> entry, Player player) {
 	int row, col;
-	string line = "\n";
-	string space = " ";
+	string line = "\n", space = " ";
 	initscr();
 	clear();
 	getmaxyx(stdscr, row, col);
@@ -315,3 +314,10 @@ void Game_Window::printHighScores(vector<string> entry, Player player) {
 	getch();
 	endwin();
 }
+
+
+
+/* ---------------------------------------------------------------------------------------
+						TESTING FUNCTIONS
+
+	--------------------------------------------------------------------------------------*/
