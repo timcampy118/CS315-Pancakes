@@ -25,4 +25,4 @@ test: Game.o Game_Window.o Player.o test_main.o
 	g++-8.2.0 -std=c++2a -Wall -Wextra -pedantic -fsanitize=address,undefined,pointer-compare,pointer-subtract -fstack-clash-protection -g -fno-omit-frame-pointer -lncurses++ -lmenu -lpanel -lform -lutil -lncurses -o test Game_Window.o Game.o test_main.o Player.o
 
 clean:
-	rm *.o
+	rm *.o test pancakes
