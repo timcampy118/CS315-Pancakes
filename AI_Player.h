@@ -9,8 +9,8 @@ class AI_Player {
 		return stack;
 	}
 
-	void setStack(vector<int> stack){
-		stack = this->stack;
+	void setStack(vector<int> stac){
+		stack = stac;
 	}
 };
 
