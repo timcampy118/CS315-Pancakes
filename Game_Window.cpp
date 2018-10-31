@@ -211,24 +211,69 @@ vector<int> Game_Window::displaySetupScreen(int size) {
 	noecho();
 	cbreak();
 
-	vector<int> order, newOrder, random;
-	for(int x=0; x<size+1; x++) {order.push_back(x);}
-
+	vector<int> initVec;
    	string msg= "Type in the next pancake 1-"+ to_string(size)+", enter 0 for a random list";		
 	
+	initVec = makeStartVec(size, msg);
+
+	return initVec;
+}
+
+
+
+
+//passes 24 lines
+vector<int> Game_Window::makeStartVec(int size, string msg){
+
+	vector<int> order, newOrder, random;
+        for(int x=0; x<size+1; x++) {order.push_back(x);}
+
 	while((int)newOrder.size()!=size) {
-		int index=chooseNumbersSetup(order,msg);
-		if(index==0) {
-			for(int x=0; x<size; x++)
+                int index=chooseNumbersSetup(order,msg);
+                if(index==0) {
+                        for(int x=0; x<size; x++)
                 random.push_back(x);
-            random_shuffle(random.begin(), random.end());
-			return random;
-		} else {
-			newOrder.push_back(order[index]);
-			order.erase(order.begin()+index);
-		}
+                random_shuffle(random.begin(), random.end());
+                        return random;
+                } else {
+                        newOrder.push_back(order[index]);
+                        order.erase(order.begin()+index);
+                }
+        }
+        return newOrder;
+}
+
+
+void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
+	
+	int rows, cols = 0, choice = 0;
+		
+	WINDOW *my_win;
+	initscr();
+	
+	int playerStackSize = playerStack.size();
+	int aiStackSize = aiStack.size();
+	
+	for(int x = 0; x < playerStackSize; x++){
+		drawHumanPancake(x);	
 	}
-	return newOrder;
+	
+	for(int y = 0; y < aiStackSize; y++){
+		drawAiPancake(y);
+	}
+	
+
+	refresh();
+}
+
+
+void Game_Window::drawHumanPancake(int size){
+
+}
+
+
+void Game_Window::drawAiPancake(int size){
+
 }
 
 
