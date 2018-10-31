@@ -13,18 +13,31 @@ using namespace std;
 
 // constructor
 Game::Game(){
-    player = Player();
-    computer = AI_Player();
-    window = Game_Window();
-    highscoreRows = readHighScores("high_scores.txt");
-    window.displayStartScreen();
+	player = Player();
+	computer = AI_Player();
+	window = Game_Window();
+
+	highscoreRows = readHighScores("high_scores.txt");
+	window.displayStartScreen();
 	window.displayInstructions();
-    GameOptions options = window.queryGameOptions();
-    window.displaySetupScreen(options.numPancakes);
+
+	GameOptions options = window.queryGameOptions();
+	vector<int> init = window.displaySetupScreen(options.numPancakes);
+	
+	player.setStack(init);
+	computer.setStack(init);
+		
+	cout << "init size " << init.size() << endl;
 	cout << player.getStack().size() << " " << computer.getStack().size() << endl;
+	
+//	while(not a winner){
+//		renderStacks(player.getStack(), computer.getStack())
+//		window.getUserInput( player.getStack().size() ) //new function
+//
+//	}
 	window.renderStacks(player.getStack(), computer.getStack());
-    window.getInitials(player);
-    window.printHighScores(highscoreRows, player);
+	window.getInitials(player);
+	window.printHighScores(highscoreRows, player);
 }
 
 //reads in the highscores.txt
