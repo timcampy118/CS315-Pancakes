@@ -215,11 +215,22 @@ vector<int> Game_Window::displaySetupScreen(int size) {
    	string msg= "Type in the next pancake 1-"+ to_string(size)+", enter 0 for a random list";		
 	
 	initVec = makeStartVec(size, msg);
+	
+	////pstack = initVec;
+	//aistack = makeAiStack(size);	
 
 	return initVec;
 }
 
 
+vector<int> Game_Window::makeAiStack(int size){
+	vector<int> random;
+	for(int x=0; x<size; x++)
+		random.push_back(x);
+	random_shuffle(random.begin(), random.end());
+	return random;
+
+}
 
 
 //passes 24 lines
@@ -268,7 +279,7 @@ void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
 
 
 void Game_Window::drawHumanPancake(int size){
-
+	std::cout << "HERE" << std::endl;
 }
 
 

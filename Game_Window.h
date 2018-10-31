@@ -32,10 +32,20 @@ class Game_Window {
 	GameOptions queryGameOptions();
 	void printPancakes(int x, int y);
 	vector<int> displaySetupScreen(int size);
+	vector<int> makeStartVec(int size, string msg);
+	void renderStacks(vector<int> playerStack, vector<int> aiStack);
+	void drawHumanPancake(int size);
+	void drawAiPancake(int size);
 	void printMenu(WINDOW *menu_win, int highlight, vector<std::string> choices);
 	void getInitials(Player& player);
 	void printHighScores(vector<string> entry, Player player);
 	void displayInstructions();
+	vector<int> makeAiStack(int size);
+	
+   // private:
+	//vector<int> pstack;
+       // vector<int> aistack;	
+	
 };
 
 #endif
