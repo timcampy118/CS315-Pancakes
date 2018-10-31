@@ -15,9 +15,16 @@ class Game {
         vector<string> highscoreRows;
     public:
         Game();
-	void printHighScores(Player player);
+	    void printHighScores(Player player);
         vector<Player> fillPlayerVector();
-        vector<string> readHighScores();
+        vector<string> readHighScores(string file);
+
+
+
+
+
+        //test functions 
+        void test_readHighScores();
 };
 
 #endif

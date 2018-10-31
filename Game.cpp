@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Game_Window.h"
 #include "Game.h"
+#include "assert.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ Game::Game(){
     player = Player();
     computer = AI_Player();
     window = Game_Window();
-    highscoreRows = readHighScores();
+    highscoreRows = readHighScores("high_scores.txt");
     window.displayStartScreen();
 	window.displayInstructions();
     GameOptions options = window.queryGameOptions();
@@ -26,8 +27,8 @@ Game::Game(){
 
 //reads in the highscores.txt
 //helper function to printHighScores
-vector<string> Game::readHighScores() {
-	string filename = "high_scores.txt";
+vector<string> Game::readHighScores(string file) {
+	string filename = file;
 	ifstream ist{filename}; // ist reads from the file named iname
 	string entry;
 	vector<string> entries;
@@ -38,7 +39,7 @@ vector<string> Game::readHighScores() {
 }
 //helper function to printHighScores
 vector<Player> Game::fillPlayerVector() {
-	vector<string> entries = readHighScores();
+	vector<string> entries = readHighScores("high_scores.txt");
 	vector<Player> dummyPlayers;
 	int entriesSize = entries.size();
 	for (int index = 0; index < entriesSize; index++) {
@@ -66,7 +67,7 @@ vector<Player> Game::fillPlayerVector() {
 
 void Game::printHighScores(Player player) {
 	string filename = "high_scores.txt";
-	vector<string> entries = readHighScores();
+	vector<string> entries = readHighScores(filename);
 	vector<Player> dummyPlayers;
 	dummyPlayers = fillPlayerVector();
 	int dummyPlayersSize = dummyPlayers.size();
@@ -87,3 +88,21 @@ void Game::printHighScores(Player player) {
 	}
 }
 
+
+
+/* ---------------------------------------------------------------------------------------
+						TESTING FUNCTIONS
+
+	--------------------------------------------------------------------------------------*/
+
+
+void Game::test_readHighScores() {
+	vector<string> expected = {"ZR 100", "LG 80", "NC 75", "CD 25", "TD 15"};
+	vector<string> input = readHighScores("test_high_scores.txt");
+	if (expected == input) {
+		cout << "test_readHighScores == PASSED" << endl;
+	}
+	else {
+		cout << "test_readHighScores == FAILED" <<endl;
+	}
+}
