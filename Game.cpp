@@ -40,6 +40,10 @@ Game::Game(){
 	window.printHighScores(highscoreRows, player);
 }
 
+void Game::play(){
+	
+}
+
 //reads in the highscores.txt
 //helper function to printHighScores
 vector<string> Game::readHighScores(string file) {
