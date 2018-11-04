@@ -30,18 +30,24 @@ Game::Game(){
 	cout << "init size " << init.size() << endl;
 	cout << player.getStack().size() << " " << computer.getStack().size() << endl;
 	
-//	while(not a winner){
-//		renderStacks(player.getStack(), computer.getStack())
-//		window.getUserInput( player.getStack().size() ) //new function
-//
-//	}
+	
 	window.renderStacks(player.getStack(), computer.getStack());
 	window.getInitials(player);
 	window.printHighScores(highscoreRows, player);
 }
 
 void Game::play(){
-	
+	while(not a winner){
+		int indexInput;
+		renderStacks(player.getStack(), computer.getStack())
+		indexInput = window.getUserInput(player.getStack().size()) //new function
+		flipStack(player,indexInput);
+		
+	}
+}
+
+void Game::flipStack(Player player, int index) {
+	reverse(player.getStack().begin(),player.getStack.begin()+index)
 }
 
 //reads in the highscores.txt
