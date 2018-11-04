@@ -35,9 +35,7 @@ class Player {
         }
         string getInitials();
         int getScore();
-        vector<int> getStack(){
-                return stack;
-        }
+        vector<int> getStack();
         void askForNewStack();
         void setStack(vector<int> stac) {
             stack = stac;

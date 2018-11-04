@@ -10,6 +10,7 @@
 #include <cstring>
 #include <string.h>
 #include "Player.h"
+#include <unistd.h>
 
 #define WIDTH 80
 #define HEIGHT 40 
@@ -20,7 +21,7 @@ vector<WINDOW*> flipVec;
 
 struct IncorrectInitials : public exception {
 	const char* what() const throw() {
-		return "Too few or too many initials, Please enter 1-3 letters.";
+		return "Too few/too many initials, Please enter 1-3 letters.";
 	}
 };
 
@@ -264,7 +265,7 @@ int Game_Window::selectPancake(int size){
 			case 10:{
 				for(int x=currentChoice-1; x<flipVec.size(); x++)
 					wattron(flipVec[x], A_BLINK);
-				sleep(3000);
+				usleep(3000000);
 				for(int x=currentChoice-1; x<flipVec.size(); x++)
 					wattroff(flipVec[x], A_BLINK);
 				return currentChoice-1;
@@ -276,7 +277,7 @@ int Game_Window::selectPancake(int size){
 			}
 		}
 	
-		mvprintw(24, 0, "                                                           ";
+		mvprintw(24, 0, "                                                           ");
 		mvprintw(HEIGHT-3*oldChoice-1, 22, "                 ");
 		mvprintw(HEIGHT-3*currentChoice-1,22 ,"<-------");
 
@@ -434,7 +435,7 @@ void Game_Window::getInitials(Player& player) {
  		endwin();
 	}
 	catch (IncorrectInitials& e) {
-		mvprintw((row/2) + 3,(col-strlen(printMessage))/2, e.what());
+		mvprintw((row/2) + 3,(col-strlen(printMessage))/2 - 10, e.what());
 		refresh();
 		getch();
 		endwin();
@@ -444,20 +445,22 @@ void Game_Window::getInitials(Player& player) {
 
 void Game_Window::printHighScores(vector<string> entry, Player player) {
 	int row, col;
-	string line = "\n", space = " ";
+	string line = "\n", space = " ", currentPlayer = "";
+	char title[] = "Top 5 High Scores";
 	initscr();
 	clear();
 	getmaxyx(stdscr, row, col);
 	int entrySize = entry.size();
+	mvprintw((row/2) - 4, (col/2) - 7, "%s", title);
 	for (int index = 0; index < entrySize; index++) {
 		entry[index] += '\n';
-		addstr(entry[index].c_str());
-		row++;
+		string s = entry[index];
+		mvprintw((row/2) + index, (col/2), "%s", s.c_str());
 	}
-	addstr(line.c_str());
-	addstr(player.getInitials().c_str());
-	addstr(space.c_str());
-	addstr(to_string(player.getScore()).c_str());
+	currentPlayer += player.getInitials();
+	currentPlayer += " ";
+	currentPlayer += to_string(player.getScore());
+	mvprintw((row/2) + 6, (col/2), "%s", currentPlayer.c_str());
 	refresh();
 	getch();
 	endwin();
