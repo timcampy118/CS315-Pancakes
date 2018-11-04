@@ -11,8 +11,8 @@
 #include <string.h>
 #include "Player.h"
 
-#define WIDTH 30
-#define HEIGHT 10 
+#define WIDTH 80
+#define HEIGHT 40 
 
 vector<WINDOW*> flipVec;
 
@@ -262,15 +262,23 @@ int Game_Window::selectPancake(int size){
 				}
 				break;
 			case 10:{
-				
+				for(int x=currentChoice-1; x<flipVec.size(); x++)
+					wattron(flipVec[x], A_BLINK);
+				sleep(3000);
+				for(int x=currentChoice-1; x<flipVec.size(); x++)
+					wattroff(flipVec[x], A_BLINK);
 				return currentChoice-1;
+				break;
+			default:
+				mvprintw(24, 0, "Invalid key entered, please use the up down error and enter");
+				refresh();
 				break;
 			}
 		}
 	
-		
-		mvprintw(50-5*oldChoice+2, 22, "                 ");
-		mvprintw(50-5*currentChoice+2,22 ,"<-------");
+		mvprintw(24, 0, "                                                           ";
+		mvprintw(HEIGHT-3*oldChoice-1, 22, "                 ");
+		mvprintw(HEIGHT-3*currentChoice-1,22 ,"<-------");
 
 		//refresh();
 		
@@ -357,7 +365,7 @@ void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
 
 void Game_Window::drawHumanPancake(int x, int pancakeSize){
 	WINDOW* my_win;
-	my_win = newwin(3, pancakeSize * 2+1, 50 - (x * 5) - 2, 0);
+	my_win = newwin(3, pancakeSize * 2+1, HEIGHT - (x * 3) - 4, 0);
 	wborder(my_win, '|', '|', '-', '-', '+', '+', '+', '+');
 	string str = to_string(pancakeSize);
 	mvwprintw(my_win, 1, pancakeSize, str.c_str());
