@@ -34,7 +34,7 @@ class Game_Window {
 	vector<int> displaySetupScreen(int size);
 	vector<int> makeStartVec(int size, string msg);
 	void renderStacks(vector<int> playerStack, vector<int> aiStack);
-	void drawHumanPancake(int size);
+	void drawHumanPancake(int x, int pancakeSize);
 	void drawAiPancake(int size);
 	void printMenu(WINDOW *menu_win, int highlight, vector<std::string> choices);
 	void getInitials(Player& player);

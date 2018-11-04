@@ -215,7 +215,7 @@ vector<int> Game_Window::displaySetupScreen(int size) {
    	string msg= "Type in the next pancake 1-"+ to_string(size)+", enter 0 for a random list";		
 	
 	initVec = makeStartVec(size, msg);
-	
+//a	
 	////pstack = initVec;
 	//aistack = makeAiStack(size);	
 
@@ -258,28 +258,57 @@ vector<int> Game_Window::makeStartVec(int size, string msg){
 void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
 	
 	int rows, cols = 0, choice = 0;
-		
+
 	WINDOW *my_win;
+
 	initscr();
+        clear();
+        noecho();
+        cbreak();
+	
+	//mvprintw(7, 0, "Team Teamwork (18)");
+	
+	refresh();	
+	
+	//cout << "PSTACK SIZE: " << playerStack.size() << endl;
+
+
 	
 	int playerStackSize = playerStack.size();
 	int aiStackSize = aiStack.size();
 	
 	for(int x = 0; x < playerStackSize; x++){
-		drawHumanPancake(x);	
+		drawHumanPancake(x, playerStack.at(x)+1);	
 	}
-	
+
+	while(true){
+		choice = wgetch(my_win);
+		if(choice == 10){
+			break;
+		}
+		wrefresh(my_win);
+	}
+	endwin();
+
+	/*
 	for(int y = 0; y < aiStackSize; y++){
 		drawAiPancake(y);
 	}
+	*/
+	//getch();
 	
 
-	refresh();
+//	refresh();
 }
 
 
-void Game_Window::drawHumanPancake(int size){
-	std::cout << "HERE" << std::endl;
+void Game_Window::drawHumanPancake(int x, int pancakeSize){
+	WINDOW* my_win;
+	my_win = newwin(3, pancakeSize * 2+1, 50 - (x * 5) - 2, 0);
+	wborder(my_win, '|', '|', '-', '-', '+', '+', '+', '+');
+	string str = to_string(pancakeSize);
+	mvwprintw(my_win, 1, pancakeSize, str.c_str());
+	wrefresh(my_win);	
 }
 
 
