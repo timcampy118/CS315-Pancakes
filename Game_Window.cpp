@@ -232,6 +232,55 @@ vector<int> Game_Window::makeAiStack(int size){
 
 }
 
+int Game_Window::selectPancake(int size){
+	int row,col;
+	repetitiveWindowCommandsEcho();
+ 	getmaxyx(stdscr,row,col);
+
+	int inputChar;
+	int currentChoice=1;
+	int oldChoice;
+	while(true)
+	{	
+		inputChar = getch();
+		//cout << inputChar<<"XX";
+		switch(inputChar)
+		{	case 65:
+				if(currentChoice != size)
+				{
+					oldChoice=currentChoice;
+					currentChoice++;
+				}
+				break;
+			case 66:
+				if(currentChoice != 0)
+				{
+					oldChoice=currentChoice;
+					currentChoice--;
+				}
+				break;
+			case 10:
+				return currentChoice;
+				break;
+		}
+	
+		
+		mvprintw(30-5*oldChoice, 80, "                 ");
+		mvprintw(30-5*currentChoice,80 ,"<-------");
+
+		refresh();
+		
+		
+		
+	}	
+	
+
+	return 1;
+
+
+
+
+}
 
 //passes 24 lines
 vector<int> Game_Window::makeStartVec(int size, string msg){
