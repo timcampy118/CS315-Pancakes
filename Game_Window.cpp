@@ -14,6 +14,8 @@
 #define WIDTH 30
 #define HEIGHT 10 
 
+vector<WINDOW*> flipVec;
+
 //exceptions
 
 struct IncorrectInitials : public exception {
@@ -234,7 +236,7 @@ vector<int> Game_Window::makeAiStack(int size){
 
 int Game_Window::selectPancake(int size){
 	int row,col;
-	repetitiveWindowCommandsEcho();
+	//repetitiveWindowCommandsEcho();
  	getmaxyx(stdscr,row,col);
 
 	int inputChar;
@@ -246,7 +248,7 @@ int Game_Window::selectPancake(int size){
 		//cout << inputChar<<"XX";
 		switch(inputChar)
 		{	case 65:
-				if(currentChoice != size)
+				if(currentChoice != size-1)
 				{
 					oldChoice=currentChoice;
 					currentChoice++;
@@ -259,16 +261,18 @@ int Game_Window::selectPancake(int size){
 					currentChoice--;
 				}
 				break;
-			case 10:
-				return currentChoice;
+			case 10:{
+				
+				return currentChoice-1;
 				break;
+			}
 		}
 	
 		
-		mvprintw(30-5*oldChoice, 80, "                 ");
-		mvprintw(30-5*currentChoice,80 ,"<-------");
+		mvprintw(50-5*oldChoice+2, 22, "                 ");
+		mvprintw(50-5*currentChoice+2,22 ,"<-------");
 
-		refresh();
+		//refresh();
 		
 		
 		
@@ -330,14 +334,14 @@ void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
 		drawHumanPancake(x, playerStack.at(x)+1);	
 	}
 
-	while(true){
-		choice = wgetch(my_win);
-		if(choice == 10){
-			break;
-		}
-		wrefresh(my_win);
-	}
-	endwin();
+//	while(true){
+//		choice = wgetch(my_win);
+//		if(choice == 10){
+//			break;
+//		}
+//		wrefresh(my_win);
+//	}
+//	endwin();
 
 	/*
 	for(int y = 0; y < aiStackSize; y++){
@@ -357,7 +361,9 @@ void Game_Window::drawHumanPancake(int x, int pancakeSize){
 	wborder(my_win, '|', '|', '-', '-', '+', '+', '+', '+');
 	string str = to_string(pancakeSize);
 	mvwprintw(my_win, 1, pancakeSize, str.c_str());
-	wrefresh(my_win);	
+	wrefresh(my_win);
+	
+	flipVec.push_back(my_win);	
 }
 
 

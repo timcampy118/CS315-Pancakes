@@ -19,7 +19,7 @@ class Game {
 	void printHighScores(Player player);
         vector<Player> fillPlayerVector();
         vector<string> readHighScores(string file);
-	
+	void flipStack(Player player, int index);
 
 
 

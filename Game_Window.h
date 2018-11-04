@@ -41,11 +41,7 @@ class Game_Window {
 	void printHighScores(vector<string> entry, Player player);
 	void displayInstructions();
 	vector<int> makeAiStack(int size);
-	int selectPancake(int size);
-	
-   // private:
-	//vector<int> pstack;
-       // vector<int> aistack;	
+	int selectPancake(int size);	
 	
 };
 

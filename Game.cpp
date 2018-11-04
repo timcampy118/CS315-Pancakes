@@ -27,27 +27,32 @@ Game::Game(){
 	player.setStack(init);
 	computer.setStack(init);
 		
-	cout << "init size " << init.size() << endl;
-	cout << player.getStack().size() << " " << computer.getStack().size() << endl;
+	//cout << "init size " << init.size() << endl;
+	//cout << player.getStack().size() << " " << computer.getStack().size() << endl;
+	
+	//window.renderStacks(player.getStack(), computer.getStack());
 	
 	
-	window.renderStacks(player.getStack(), computer.getStack());
-	window.getInitials(player);
-	window.printHighScores(highscoreRows, player);
+	
+//	window.getInitials(player);
+//	window.printHighScores(highscoreRows, player);
 }
 
 void Game::play(){
-	while(not a winner){
+	while(true){
 		int indexInput;
-		renderStacks(player.getStack(), computer.getStack())
-		indexInput = window.getUserInput(player.getStack().size()) //new function
-		flipStack(player,indexInput);
-		
+		window.renderStacks(player.getStack(), computer.getStack());
+		window.selectPancake(player.getStack().size());
+		//indexInput = window.getUserInput(player.getStack().size()) //new function
+		//flipStack(player,indexInput);
+		break;	
 	}
+	window.getInitials(player);
+        window.printHighScores(highscoreRows, player);
 }
 
 void Game::flipStack(Player player, int index) {
-	reverse(player.getStack().begin(),player.getStack.begin()+index)
+	reverse(player.getStack().begin(),player.getStack().begin()+index);
 }
 
 //reads in the highscores.txt
