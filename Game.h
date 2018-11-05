@@ -13,6 +13,7 @@ class Game {
         int numOfPancakes;
         int diff;
         vector<string> highscoreRows;
+        GameOptions options;
     public:
         Game();
 	void play();
@@ -20,7 +21,11 @@ class Game {
         vector<Player> fillPlayerVector();
         vector<string> readHighScores(string file);
 	void flipStack(Player player, int index);
-
+        bool isWinner();
+        int getWinner();
+        void calculatePlayerScore(int winner);
+        void pregameProcedures();
+        void determineWinnerInfo(bool &shouldPlay);
 
 
 

@@ -11,6 +11,7 @@ class Player {
         vector<int> stack;
         string initials;
         int score;
+        bool toPlayAgain = false;
     public:
         Player() {
             initials = "NA";
@@ -35,6 +36,9 @@ class Player {
         }
         string getInitials();
         int getScore();
+        void setScore(int sc) {
+            score = sc;
+        }
         vector<int> getStack();
         void askForNewStack();
         void setStack(vector<int> stac) {
@@ -45,6 +49,13 @@ class Player {
         }
         void setName(string inits) {
             initials = inits;
+        }
+        void setPlayAgain(bool ans) {
+            toPlayAgain = ans;
+        }
+
+        bool getPlayAgainAns() {
+            return toPlayAgain;
         }
 };
 
