@@ -17,6 +17,7 @@ class Node {
     int sortedness;
     Node* flipAndGenerateNewNode(int index);
     std::vector<Node *> successors();
+    int determineSortedness();
     std::string toString();
 };
 
