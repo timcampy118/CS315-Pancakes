@@ -4,10 +4,9 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
-
-int determineSortedness(vector<int> stack);
 
 Node::Node(vector<int> stack): stack(stack) {
   // determine the sortedness of the stack and set it to sortedness;
@@ -39,7 +38,7 @@ vector<Node*> Node::successors() {
 
 Node* Node::flipAndGenerateNewNode(int index) {
   vector<int> newStack = this->stack;
-	reverse(newStack.begin()+index, newStack.end());
+	std::reverse(newStack.begin()+index, newStack.end());
   Node* returnNode = new Node(newStack);
   return returnNode;
 }
