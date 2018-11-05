@@ -10,12 +10,29 @@
 #include <cstring>
 #include <string.h>
 #include "Player.h"
+#include <unistd.h>
 
-#define WIDTH 30
-#define HEIGHT 10 
+#define WIDTH 80
+#define HEIGHT 40 
+
+vector<WINDOW*> flipVec;
+
+//exceptions
+
+struct IncorrectInitials : public exception {
+	const char* what() const throw() {
+		return "Too few/too many initials, Please enter 1-3 letters.";
+	}
+};
 
 Game_Window::Game_Window() {
 	return;
+}
+
+void repetitiveWindowCommandsEcho() {
+	 	initscr();
+		clear();
+		echo();	
 }
 
 //passes 24 line test
@@ -30,7 +47,7 @@ void Game_Window::displayStartScreen(){
         mvprintw(rows-1, 0, "Jack Shirley, Jay Khatri, Zackary Ramirez, Timothy Nguyen");
         refresh();
 
-        my_win = create_newwin(HEIGHT, WIDTH, (rows/2)-12, (cols/2)-3);
+        my_win = create_newwin(HEIGHT, WIDTH, (rows/2) - 3, (cols/2)-25);
         keypad(my_win,true);
         while(true){
                 wattron(my_win, A_BLINK);
@@ -191,31 +208,176 @@ int Game_Window::chooseNumbersSetup(std::vector<int> choices, std::string messag
 
 
 //passes 24 lines 
-vector<int> Game_Window::displaySetupScreen(int size)
-{
+vector<int> Game_Window::displaySetupScreen(int size) {
 	initscr();
 	clear();
 	noecho();
 	cbreak();
 
-	vector<int> order, newOrder, random;
-	for(int x=0; x<size+1; x++) {order.push_back(x);}
-
+	vector<int> initVec;
    	string msg= "Type in the next pancake 1-"+ to_string(size)+", enter 0 for a random list";		
 	
-	while((int)newOrder.size()!=size) {
-		int index=chooseNumbersSetup(order,msg);
-		if(index==0) {
-			for(int x=0; x<size; x++)
-                random.push_back(x);
-            random_shuffle(random.begin(), random.end());
-			return random;
-		} else {
-			newOrder.push_back(order[index]);
-			order.erase(order.begin()+index);
+	initVec = makeStartVec(size, msg);
+//a	
+	////pstack = initVec;
+	//aistack = makeAiStack(size);	
+
+	return initVec;
+}
+
+
+vector<int> Game_Window::makeAiStack(int size){
+	vector<int> random;
+	for(int x=0; x<size; x++)
+		random.push_back(x);
+	random_shuffle(random.begin(), random.end());
+	return random;
+
+}
+
+int Game_Window::selectPancake(int size){
+	int row,col;
+	//repetitiveWindowCommandsEcho();
+ 	getmaxyx(stdscr,row,col);
+
+	int inputChar;
+	int currentChoice=1;
+	int oldChoice;
+	while(true)
+	{	
+		inputChar = getch();
+		//cout << inputChar<<"XX";
+		switch(inputChar)
+		{	case 65:
+				if(currentChoice != size-1)
+				{
+					oldChoice=currentChoice;
+					currentChoice++;
+				}
+				break;
+			case 66:
+				if(currentChoice != 0)
+				{
+					oldChoice=currentChoice;
+					currentChoice--;
+				}
+				break;
+			case 10:{
+				for(int x=currentChoice-1; x<flipVec.size(); x++)
+					wattron(flipVec[x], A_BLINK);
+				usleep(3000000);
+				for(int x=currentChoice-1; x<flipVec.size(); x++)
+					wattroff(flipVec[x], A_BLINK);
+				return currentChoice-1;
+				break;
+			default:
+				mvprintw(24, 0, "Invalid key entered, please use the up down error and enter");
+				refresh();
+				break;
+			}
 		}
+	
+		mvprintw(24, 0, "                                                           ");
+		mvprintw(HEIGHT-3*oldChoice-1, 22, "                 ");
+		mvprintw(HEIGHT-3*currentChoice-1,22 ,"<-------");
+
+		//refresh();
+		
+		
+		
+	}	
+	
+
+	return 1;
+
+
+
+
+}
+
+//passes 24 lines
+vector<int> Game_Window::makeStartVec(int size, string msg){
+
+	vector<int> order, newOrder, random;
+        for(int x=0; x<size+1; x++) {order.push_back(x);}
+
+	while((int)newOrder.size()!=size) {
+                int index=chooseNumbersSetup(order,msg);
+                if(index==0) {
+                        for(int x=0; x<size; x++)
+                random.push_back(x);
+                random_shuffle(random.begin(), random.end());
+                        return random;
+                } else {
+                        newOrder.push_back(order[index]);
+                        order.erase(order.begin()+index);
+                }
+        }
+        return newOrder;
+}
+
+
+void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
+	
+	int rows, cols = 0, choice = 0;
+
+	WINDOW *my_win;
+
+	initscr();
+        clear();
+        noecho();
+        cbreak();
+	
+	//mvprintw(7, 0, "Team Teamwork (18)");
+	
+	refresh();	
+	
+	//cout << "PSTACK SIZE: " << playerStack.size() << endl;
+
+
+	
+	int playerStackSize = playerStack.size();
+	int aiStackSize = aiStack.size();
+	
+	for(int x = 0; x < playerStackSize; x++){
+		drawHumanPancake(x, playerStack.at(x)+1);	
 	}
-	return newOrder;
+
+//	while(true){
+//		choice = wgetch(my_win);
+//		if(choice == 10){
+//			break;
+//		}
+//		wrefresh(my_win);
+//	}
+//	endwin();
+
+	/*
+	for(int y = 0; y < aiStackSize; y++){
+		drawAiPancake(y);
+	}
+	*/
+	//getch();
+	
+
+//	refresh();
+}
+
+
+void Game_Window::drawHumanPancake(int x, int pancakeSize){
+	WINDOW* my_win;
+	my_win = newwin(3, pancakeSize * 2+1, HEIGHT - (x * 3) - 4, 0);
+	wborder(my_win, '|', '|', '-', '-', '+', '+', '+', '+');
+	string str = to_string(pancakeSize);
+	mvwprintw(my_win, 1, pancakeSize, str.c_str());
+	wrefresh(my_win);
+	
+	flipVec.push_back(my_win);	
+}
+
+
+void Game_Window::drawAiPancake(int size){
+
 }
 
 
@@ -257,39 +419,56 @@ void Game_Window::printPancakes(int y, int x){
 }
 
 void Game_Window::getInitials(Player& player) {
-	char printMessage[]="Please enter your initials: ";	
-	char init[80];
- 	int row,col;
- 	initscr();
-	clear();
-	echo();	
- 	getmaxyx(stdscr,row,col);
- 	mvprintw(row/2,(col-strlen(printMessage))/2,"%s",printMessage);
-
- 	getstr(init);
-	string playerInitials(init);
-	player.setName(playerInitials);
- 	endwin();
+		char printMessage[]="Please enter your initials: ";	
+		char init[80];
+ 		int row,col;
+		repetitiveWindowCommandsEcho();
+ 		getmaxyx(stdscr,row,col);
+	try {
+ 		mvprintw(row/2,(col-strlen(printMessage))/2,"%s",printMessage);
+ 		getstr(init);
+		string playerInitials(init);
+		if (playerInitials.size() < 1 || playerInitials.size() > 3) {
+			throw IncorrectInitials();
+		}
+		player.setName(playerInitials);
+ 		endwin();
+	}
+	catch (IncorrectInitials& e) {
+		mvprintw((row/2) + 3,(col-strlen(printMessage))/2 - 10, e.what());
+		refresh();
+		getch();
+		endwin();
+		getInitials(player);
+	}
 }
 
 void Game_Window::printHighScores(vector<string> entry, Player player) {
 	int row, col;
-	string line = "\n";
-	string space = " ";
+	string line = "\n", space = " ", currentPlayer = "";
+	char title[] = "Top 5 High Scores";
 	initscr();
 	clear();
 	getmaxyx(stdscr, row, col);
 	int entrySize = entry.size();
+	mvprintw((row/2) - 4, (col/2) - 7, "%s", title);
 	for (int index = 0; index < entrySize; index++) {
 		entry[index] += '\n';
-		addstr(entry[index].c_str());
-		row++;
+		string s = entry[index];
+		mvprintw((row/2) + index, (col/2), "%s", s.c_str());
 	}
-	addstr(line.c_str());
-	addstr(player.getInitials().c_str());
-	addstr(space.c_str());
-	addstr(to_string(player.getScore()).c_str());
+	currentPlayer += player.getInitials();
+	currentPlayer += " ";
+	currentPlayer += to_string(player.getScore());
+	mvprintw((row/2) + 6, (col/2), "%s", currentPlayer.c_str());
 	refresh();
 	getch();
 	endwin();
 }
+
+
+
+/* ---------------------------------------------------------------------------------------
+						TESTING FUNCTIONS
+
+	--------------------------------------------------------------------------------------*/
