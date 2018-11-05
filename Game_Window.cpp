@@ -25,6 +25,12 @@ struct IncorrectInitials : public exception {
 	}
 };
 
+struct IncorrectAnswer : public exception {
+	const char* what() const throw() {
+		return "Invalid Answer. Please enter Y or N.";
+	}
+};
+
 Game_Window::Game_Window() {
 	return;
 }
@@ -463,6 +469,53 @@ void Game_Window::printHighScores(vector<string> entry, Player player) {
 	mvprintw((row/2) + 6, (col/2), "%s", currentPlayer.c_str());
 	refresh();
 	getch();
+	endwin();
+}
+
+void Game_Window::printEndMessage(int winner, Player& playr) {
+	int row, col;
+	string message;
+	string playerScore = "Score: ";
+	playerScore  += to_string(playr.getScore());
+	initscr();
+	echo();
+	clear();
+	getmaxyx(stdscr, row, col);
+	if (winner == 1) {
+		message = "CONGRATS, you have beaten the computer!!";
+	}
+	else if (winner == 2) {
+		message = "Do better ;/, the computer has defeated you!";
+	}
+	else if (winner == 3) {
+		message = "You and the computer tied, better luck next time!";
+	}
+	mvprintw((row/2), (col/2), "%s", message.c_str());
+	mvprintw((row/2) + 5, (col/2), "%s", playerScore.c_str());
+	mvprintw((row/2) + 7, (col/2), "%s", "Press ENTER to continue...");
+	refresh();
+	getch();
+	endwin();
+}
+
+void Game_Window::playAgain(Player& playr) {
+	int row, col, num = 0;
+	bool value;
+	initscr();
+	echo();
+	clear();
+	getmaxyx(stdscr, row, col);
+
+	vector<int> choices = {1, 2};
+	string message = "Choose 1 to play again or 2 to quit. (1/2): ";
+	value = chooseNumbersSetup(choices, message);
+	if (num == 1) {
+		value = true;
+	}
+	else if (num == 2) {
+		value = false;
+	}
+	playr.setPlayAgain(value);
 	endwin();
 }
 
