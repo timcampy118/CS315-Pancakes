@@ -171,10 +171,7 @@ int Game_Window::chooseNumbersSetup(std::vector<int> choices, std::string messag
 	}
 
 	int highlight = 1, choice = 0, yMax, xMax, input_char;
-	initscr();
 	clear();
-	noecho();
-	cbreak();
     getmaxyx(stdscr,xMax,yMax);
 	WINDOW* menu_win = newwin(choices.size()+4, 15, (xMax/2), (yMax/2));
 	keypad(menu_win, TRUE);

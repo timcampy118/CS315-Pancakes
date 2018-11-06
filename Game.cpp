@@ -35,18 +35,31 @@ void Game::pregameProcedures() {
 }
 
 void Game::play(){
+	vector<int> test;
+	test.push_back(3);
+	test.push_back(1);
+	test.push_back(0);
+	test.push_back(2);
 	bool keepPlaying = true;
 	bool anyWinners = false;
+	bool toPlayAgain = false;
+	pregameProcedures();
 	while(keepPlaying){
-		pregameProcedures();
+		if(toPlayAgain){
+			pregameProcedures();
+		}
 		int indexInput;
 		window.renderStacks(player.getStack(), computer.getStack());
-		window.selectPancake(player.getStack().size());
+		indexInput = window.selectPancake(player.getStack().size());
+		window.renderStacks(test, test);
+		indexInput = window.selectPancake(player.getStack().size());
+		
 		//indexInput = window.getUserInput(player.getStack().size()) //new function
-		//flipStack(player,indexInput);
+		flipStack(player,indexInput);
 		anyWinners = isWinner();
 		if (anyWinners) {
 			determineWinnerInfo(keepPlaying);
+			toPlayAgain = player.getPlayAgainAns();
 		}
 		
 		//break;	
@@ -86,7 +99,7 @@ void Game::calculatePlayerScore(int winner) {
 		default:	//shouldn't ever get to here but prep
 			scor = 1;
 			player.setScore(scor);
-			break;
+		break;
 	}
 }
 
@@ -95,10 +108,8 @@ void Game::calculatePlayerScore(int winner) {
 bool Game::isWinner() {
 	bool playerSorted = false, computerSorted = false;
 	vector<int> playerStac = player.getStack(), compStac = computer.getStack();
-	playerSorted = true;
-	computerSorted = true;
-	// playerSorted = is_sorted(playerStac.begin(), playerStac.end());
-	// computerSorted = is_sorted(compStac.begin(), compStac.end());
+	playerSorted = is_sorted(playerStac.begin(), playerStac.end());
+	computerSorted = is_sorted(compStac.begin(), compStac.end());
 	if (playerSorted == true || computerSorted == true) {
 		return true;
 	}
@@ -111,10 +122,8 @@ bool Game::isWinner() {
 int Game::getWinner() {
 	bool playerSorted = false, computerSorted = false;
 	vector<int> playerStac = player.getStack(), compStac = computer.getStack();
-	playerSorted = true;
-	computerSorted = true;
-	// playerSorted = is_sorted(playerStac.begin(), playerStac.end());
-	// computerSorted = is_sorted(compStac.begin(), compStac.end());
+	playerSorted = is_sorted(playerStac.begin(), playerStac.end());
+	computerSorted = is_sorted(compStac.begin(), compStac.end());
 	if (playerSorted == true && computerSorted == false) {
 		return 1;
 	}
