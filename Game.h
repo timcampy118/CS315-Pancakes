@@ -16,24 +16,28 @@ class Game {
         GameOptions options;
     public:
         Game();
-	void play();
-	void printHighScores(Player player);
+	    void play();
+	    void printHighScores(Player player);
         vector<Player> fillPlayerVector();
         vector<string> readHighScores(string file);
-	Player flipStack(Player player, int index);
-    void flipStackTest(Player player);
-    void renderStacksTest();
+	    Player flipStack(Player player, int index);
+        
         bool isWinner(Player playr, AI_Player comp);
         int getWinner(Player playr, AI_Player comp);
-        void calculatePlayerScore(int winner);
+        void calculatePlayerScore(Player& play, int winner, int pancakes, int difficultt);
         void pregameProcedures();
         void determineWinnerInfo(bool &shouldPlay);
 
 
 
         //test functions 
-        void test_readHighScores();
-        void test_getWinner();
+        int test_readHighScores();
+        int test_getWinner();
+        int test_isWinner();
+        int test_calculatePlayerScore();
+
+	    void test_flipStack(Player player);
+        void test_renderStacks();
 };
 
 #endif
