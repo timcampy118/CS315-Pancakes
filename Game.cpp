@@ -4,6 +4,7 @@
 #include "string.h"
 #include <fstream>
 #include <algorithm>
+#include <unistd.h>
 #include "Player.h"
 #include "Game_Window.h"
 #include "Game.h"
@@ -36,7 +37,8 @@ void Game::pregameProcedures() {
 
 void Game::play(){
 
-	flipStackTest(player);
+	//flipStackTest(player);
+	renderStacksTest();
 	/*
 	pregameProcedures();
 	int indexInput;
@@ -152,47 +154,54 @@ int Game::getWinner() {
 
 
 
+void Game::renderStacksTest(){
+vector<int> v{1,2,3,4};
+player.setStack(v);
+window.renderStacks(player.getStack(), computer.getStack());
+usleep(1500000);
+vector<int> u{5,6,7,8,9,4};
+player.setStack(u);
+window.renderStacks(player.getStack(), computer.getStack());
+usleep(1500000);
+vector<int> x{1,2,3,4,5,6};
+player.setStack(x);
+window.renderStacks(player.getStack(), computer.getStack());
+usleep(1500000);
+vector<int> a{2,3,4,5,6,7};
+player.setStack(a);
+window.renderStacks(player.getStack(), computer.getStack());
+usleep(1500000);
+vector<int> b{1,2,3,4,5};
+player.setStack(b);
+window.renderStacks(player.getStack(), computer.getStack());
+usleep(1500000);
+}
+
 void Game::flipStackTest(Player player){
-
-vector<int> v;
-v.push_back(1);
-v.push_back(2);
-v.push_back(3);
-v.push_back(4);
-
+vector<int> v{1,2,3,4};
 player.setStack(v);
 flipStack(player,2);
 cout<<"expected output 1 2 4 3"<<endl;
 
-
-vector<int> u;
-u.push_back(5);
-u.push_back(6);
-u.push_back(7);
-u.push_back(8);
-u.push_back(9);
-u.push_back(4);
-
-
+vector<int> u{5,6,7,8,9,4};
 player.setStack(u);
 flipStack(player,4);
 cout<<"expected output 5 6 7 8 4 9"<<endl;
 
-
-vector<int> x;
-x.push_back(1);
-x.push_back(2);
-x.push_back(3);
-x.push_back(4);
-x.push_back(5);
-x.push_back(6);
-
-
+vector<int> x{1,2,3,4,5,6};
 player.setStack(x);
 flipStack(player,0);
 cout<<"expected output 6 5 4 3 2 1"<<endl;
 
+vector<int> a{2,3,4,5,6,7};
+player.setStack(a);
+flipStack(player,1);
+cout<<"expected output 2 7 6 5 4 3"<<endl;
 
+vector<int> b{1,2,3,4,5};
+player.setStack(b);
+flipStack(player,4);
+cout<<"expected output 1 2 3 4 5"<<endl;
 }
 
 
