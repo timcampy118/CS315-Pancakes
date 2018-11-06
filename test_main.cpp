@@ -9,6 +9,8 @@ using namespace std;
 
 int main() {
     Game* game;
+    Player player = Player();
+    Game_Window window = Game_Window();
     int testsPassed = 0;
     int numOfTests = 3;
 
@@ -19,5 +21,7 @@ int main() {
 
     cout << endl;
     cout << testsPassed << " of " << numOfTests << " tests passed... Done." << endl; 
+    game->test_flipStack(Player player);
+    game->test_renderStacks();
     return 0;
 }
