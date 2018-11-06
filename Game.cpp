@@ -37,20 +37,7 @@ void Game::pregameProcedures() {
 
 void Game::play(){
 
-	//flipStackTest(player);
-	renderStacksTest();
-	/*
-	pregameProcedures();
-	int indexInput;
-	player.setStack(v);
-	window.renderStacks(player.getStack(), computer.getStack());
-	indexInput = window.selectPancake(player.getStack().size());
-	flipStack(player,indexInput);
-	window.renderStacks(player.getStack(), computer.getStack());
-	indexInput = window.selectPancake(player.getStack().size());
-	//flipStack(player,3);
-	*/
-/*	bool keepPlaying = true;
+	bool keepPlaying = true;
 	bool anyWinners = false;
 	bool toPlayAgain = false;
 	pregameProcedures();
@@ -59,16 +46,8 @@ void Game::play(){
 			pregameProcedures();
 		}
 		int indexInput;
-		//player.setStack(test);
 		window.renderStacks(player.getStack(), computer.getStack());
 		indexInput = window.selectPancake(player.getStack().size());
-		//player.setStack(test1);
-		//window.renderStacks(player.getStack(), computer.getStack());
-		//indexInput = window.selectPancake(player.getStack().size());
-		
-		//indexInput = window.selectPancake(player.getStack().size());
-		
-		//indexInput = window.getUserInput(player.getStack().size()) //new function
 		flipStack(player,indexInput);
 		anyWinners = isWinner();
 		if (anyWinners) {
@@ -81,13 +60,13 @@ void Game::play(){
 	}
 	// window.getInitials(player);
     // window.printHighScores(highscoreRows, player);
-    */
+    
 }
 
 //determines the score and prints the appropriate information 
 void Game::determineWinnerInfo(bool &shouldPlay) {
 	int winner = 0;
-	winner = getWinner();
+	winner = getWinner(player, computer);
 	calculatePlayerScore(winner);
 	window.printEndMessage(winner, player);
 	window.printHighScores(highscoreRows, player);
@@ -135,9 +114,9 @@ bool Game::isWinner() {
 }
 
 //returns the winner 
-int Game::getWinner() {
+int Game::getWinner(Player playr, AI_Player comp) {
 	bool playerSorted = false, computerSorted = false;
-	vector<int> playerStac = player.getStack(), compStac = computer.getStack();
+	vector<int> playerStac = playr.getStack(), compStac = comp.getStack();
 	playerSorted = is_sorted(playerStac.begin(), playerStac.end());
 	computerSorted = is_sorted(compStac.begin(), compStac.end());
 	if (playerSorted == true && computerSorted == false) {
@@ -155,65 +134,57 @@ int Game::getWinner() {
 
 
 void Game::renderStacksTest(){
-vector<int> v{1,2,3,4};
-player.setStack(v);
-window.renderStacks(player.getStack(), computer.getStack());
-usleep(1500000);
-vector<int> u{5,6,7,8,9,4};
-player.setStack(u);
-window.renderStacks(player.getStack(), computer.getStack());
-usleep(1500000);
-vector<int> x{1,2,3,4,5,6};
-player.setStack(x);
-window.renderStacks(player.getStack(), computer.getStack());
-usleep(1500000);
-vector<int> a{2,3,4,5,6,7};
-player.setStack(a);
-window.renderStacks(player.getStack(), computer.getStack());
-usleep(1500000);
-vector<int> b{1,2,3,4,5};
-player.setStack(b);
-window.renderStacks(player.getStack(), computer.getStack());
-usleep(1500000);
+	vector<int> v{1,2,3,4};
+	player.setStack(v);
+	window.renderStacks(player.getStack(), computer.getStack());
+	usleep(1500000);
+	vector<int> u{5,6,7,8,9,4};
+	player.setStack(u);
+	window.renderStacks(player.getStack(), computer.getStack());
+	usleep(1500000);
+	vector<int> x{1,2,3,4,5,6};
+	player.setStack(x);
+	window.renderStacks(player.getStack(), computer.getStack());
+	usleep(1500000);
+	vector<int> a{2,3,4,5,6,7};
+	player.setStack(a);
+	window.renderStacks(player.getStack(), computer.getStack());
+	usleep(1500000);
+	vector<int> b{1,2,3,4,5};
+	player.setStack(b);
+	window.renderStacks(player.getStack(), computer.getStack());
+	usleep(1500000);
 }
 
 void Game::flipStackTest(Player player){
-vector<int> v{1,2,3,4};
-player.setStack(v);
-flipStack(player,2);
-cout<<"expected output 1 2 4 3"<<endl;
+	vector<int> v{1,2,3,4};
+	player.setStack(v);
+	flipStack(player,2);
+	cout<<"expected output 1 2 4 3"<<endl;
 
-vector<int> u{5,6,7,8,9,4};
-player.setStack(u);
-flipStack(player,4);
-cout<<"expected output 5 6 7 8 4 9"<<endl;
+	vector<int> u{5,6,7,8,9,4};
+	player.setStack(u);
+	flipStack(player,4);
+	cout<<"expected output 5 6 7 8 4 9"<<endl;
 
-vector<int> x{1,2,3,4,5,6};
-player.setStack(x);
-flipStack(player,0);
-cout<<"expected output 6 5 4 3 2 1"<<endl;
+	vector<int> x{1,2,3,4,5,6};
+	player.setStack(x);
+	flipStack(player,0);
+	cout<<"expected output 6 5 4 3 2 1"<<endl;
 
-vector<int> a{2,3,4,5,6,7};
-player.setStack(a);
-flipStack(player,1);
-cout<<"expected output 2 7 6 5 4 3"<<endl;
+	vector<int> a{2,3,4,5,6,7};
+	player.setStack(a);
+	flipStack(player,1);
+	cout<<"expected output 2 7 6 5 4 3"<<endl;
 
-vector<int> b{1,2,3,4,5};
-player.setStack(b);
-flipStack(player,4);
-cout<<"expected output 1 2 3 4 5"<<endl;
+	vector<int> b{1,2,3,4,5};
+	player.setStack(b);
+	flipStack(player,4);
+	cout<<"expected output 1 2 3 4 5"<<endl;
 }
 
 
 void Game::flipStack(Player player, int index) {
-
-
-//reverse(player.getStack().begin(),player.getStack().begin()+index);
-/*
-	for(int x=0; x<player.getStack().size(); x++)
-		cout<<player.getStack()[x];
-	cout<<endl;
-*/
 	
 	vector<int> tmpStack;
 	for(int x=0; x<index;x++)
@@ -323,3 +294,21 @@ void Game::test_readHighScores() {
 		cout << "test_readHighScores == FAILED" <<endl;
 	}
 }
+
+void Game::test_getWinner() {
+	Player play;
+	AI_Player comp;
+	int expected = 1, actual = 0;
+	vector<int> playerStack = {1, 2, 3, 4, 5}, compStack = {1, 3, 2, 4, 5};
+	play.setStack(playerStack);
+	comp.setStack(compStack);
+	actual = getWinner(play, comp);
+	if (expected == actual) {
+		cout << "test_getWinner == PASSED" << endl;
+	}
+	else {
+		cout << "test_getWinner == FAILED" << endl;
+	}
+	
+}
+
