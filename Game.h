@@ -16,13 +16,13 @@ class Game {
         GameOptions options;
     public:
         Game();
-	void play();
-	void printHighScores(Player player);
+	    void play();
+	    void printHighScores(Player player);
         vector<Player> fillPlayerVector();
         vector<string> readHighScores(string file);
-	Player flipStack(Player player, int index);
-    void flipStackTest(Player player);
-    void renderStacksTest();
+	    Player flipStack(Player player, int index);
+        void flipStackTest(Player player);
+        void renderStacksTest();
         bool isWinner(Player playr, AI_Player comp);
         int getWinner(Player playr, AI_Player comp);
         void calculatePlayerScore(int winner);
@@ -32,8 +32,9 @@ class Game {
 
 
         //test functions 
-        void test_readHighScores();
-        void test_getWinner();
+        int test_readHighScores();
+        int test_getWinner();
+        int test_isWinner();
 };
 
 #endif

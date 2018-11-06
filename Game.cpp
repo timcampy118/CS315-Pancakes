@@ -36,9 +36,7 @@ void Game::pregameProcedures() {
 }
 
 void Game::play(){
-	bool keepPlaying = true;
-	bool anyWinners = false;
-	bool toPlayAgain = false;
+	bool keepPlaying = true, anyWinners = false, toPlayAgain = false;
 	pregameProcedures();
 	while(keepPlaying){
 		if(toPlayAgain){
@@ -160,22 +158,18 @@ void Game::flipStackTest(Player player){
 	player.setStack(v);
 	flipStack(player,2);
 	cout<<"expected output 1 2 4 3"<<endl;
-
 	vector<int> u{5,6,7,8,9,4};
 	player.setStack(u);
 	flipStack(player,4);
 	cout<<"expected output 5 6 7 8 4 9"<<endl;
-
 	vector<int> x{1,2,3,4,5,6};
 	player.setStack(x);
 	flipStack(player,0);
 	cout<<"expected output 6 5 4 3 2 1"<<endl;
-
 	vector<int> a{2,3,4,5,6,7};
 	player.setStack(a);
 	flipStack(player,1);
 	cout<<"expected output 2 7 6 5 4 3"<<endl;
-
 	vector<int> b{1,2,3,4,5};
 	player.setStack(b);
 	flipStack(player,4);
@@ -184,31 +178,13 @@ void Game::flipStackTest(Player player){
 
 
 Player Game::flipStack(Player player, int index) {
-
-
-//reverse(player.getStack().begin(),player.getStack().begin()+index);
-/*
-	for(int x=0; x<player.getStack().size(); x++)
-		cout<<player.getStack()[x];
-	cout<<endl;
-*/
-	
 	vector<int> tmpStack;
 	for(int x=0; x<index;x++)
 		tmpStack.push_back(player.getStack()[x]);	
-	
 	for(int x=player.getStack().size()-1; x>=index; x--)
 		tmpStack.push_back(player.getStack()[x]);
-
 	player.setStack(tmpStack);
-
 	return player;
-
-/*
-	for(int x=0; x<player.getStack().size(); x++)
-		cout<<player.getStack()[x]<<" ";
-	cout<<endl;	
-*/	
 }
 
 //reads in the highscores.txt
@@ -237,7 +213,6 @@ vector<Player> Game::fillPlayerVector() {
 			string s = entries[index];
 			string tempInitials;
 			string tempScoreString = s.substr(s.find(" ") + 1);
-			//cout << "TEMPSCORESTRING: " << tempScoreString << endl;
 			int tempScore = stoi(tempScoreString);
 			
 			//grabs the intials by delimiting a space character
@@ -293,31 +268,58 @@ void Game::printHighScores(Player player) {
 	--------------------------------------------------------------------------------------*/
 
 
-void Game::test_readHighScores() {
+int Game::test_readHighScores() {
 	vector<string> expected = {"ZR 100", "LG 80", "NC 75", "CD 25", "TD 15"};
 	vector<string> input = readHighScores("test_high_scores.txt");
 	if (expected == input) {
 		cout << "test_readHighScores == PASSED" << endl;
+		return 1;
 	}
 	else {
 		cout << "test_readHighScores == FAILED" <<endl;
+		return 0;
 	}
 }
 
-void Game::test_getWinner() {
+//tests getWinner()
+int Game::test_getWinner() {
 	Player play;
 	AI_Player comp;
 	int expected = 1, actual = 0;
 	vector<int> playerStack = {1, 2, 3, 4, 5}, compStack = {1, 3, 2, 4, 5};
+	reverse(playerStack.begin(), playerStack.end());
+	reverse(compStack.begin(), compStack.end());
 	play.setStack(playerStack);
 	comp.setStack(compStack);
 	actual = getWinner(play, comp);
 	if (expected == actual) {
 		cout << "test_getWinner == PASSED" << endl;
+		return 1;
 	}
 	else {
 		cout << "test_getWinner == FAILED" << endl;
+		return 0;
 	}
-	
+}
+
+//tests isWinner()
+int Game::test_isWinner() {
+	Player play;
+	AI_Player comp;
+	bool expected = 1, actual = 0;
+	vector<int> playerStack = {1, 2, 3, 4, 5}, compStack = {1, 3, 2, 4, 5};
+	reverse(playerStack.begin(), playerStack.end());
+	reverse(compStack.begin(), compStack.end());
+	play.setStack(playerStack);
+	comp.setStack(compStack);
+	actual = isWinner(play, comp);
+	if (expected == actual) {
+		cout << "test_isWinner == PASSED" << endl;
+		return 1;
+	}
+	else {
+		cout << "test_isWinner == FAILED" << endl;
+		return 0;
+	}
 }
 
