@@ -24,6 +24,7 @@ Game::Game(){
 	window.displayInstructions();
 }
 
+//initial setup of game
 void Game::pregameProcedures() {
 		options = window.queryGameOptions();
 		vector<int> init = window.displaySetupScreen(options.numPancakes);
@@ -35,6 +36,8 @@ void Game::pregameProcedures() {
 		window.printHighScores(highscoreRows, player);
 }
 
+
+//bulk of where the game is ran from
 void Game::play(){
 	bool keepPlaying = true, anyWinners = false, toPlayAgain = false;
 	pregameProcedures();
@@ -130,7 +133,7 @@ int Game::getWinner(Player playr, AI_Player comp) {
 
 
 
-void Game::renderStacksTest(){
+void Game::test_renderStacks(){
 	vector<int> v{1,2,3,4};
 	player.setStack(v);
 	window.renderStacks(player.getStack(), computer.getStack());
@@ -153,7 +156,7 @@ void Game::renderStacksTest(){
 	usleep(1500000);
 }
 
-void Game::flipStackTest(Player player){
+void Game::test_flipStack(Player player){
 	vector<int> v{1,2,3,4};
 	player.setStack(v);
 	flipStack(player,2);

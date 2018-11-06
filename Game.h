@@ -21,8 +21,7 @@ class Game {
         vector<Player> fillPlayerVector();
         vector<string> readHighScores(string file);
 	    Player flipStack(Player player, int index);
-        void flipStackTest(Player player);
-        void renderStacksTest();
+        
         bool isWinner(Player playr, AI_Player comp);
         int getWinner(Player playr, AI_Player comp);
         void calculatePlayerScore(Player& play, int winner, int pancakes, int difficultt);
@@ -36,6 +35,9 @@ class Game {
         int test_getWinner();
         int test_isWinner();
         int test_calculatePlayerScore();
+
+	    void test_flipStack(Player player);
+        void test_renderStacks();
 };
 
 #endif

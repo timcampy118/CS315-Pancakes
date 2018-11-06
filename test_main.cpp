@@ -9,6 +9,8 @@ using namespace std;
 
 int main() {
     Game* game;
+    Player player = Player();
+    Game_Window window = Game_Window();
     int testsPassed = 0;
     int numOfTests = 6;
 
@@ -19,6 +21,7 @@ int main() {
     testsPassed += game->test_calculatePlayerScore(); // this one has three tests in it 
     cout << endl;
     cout << testsPassed << " of " << numOfTests << " tests passed... Done." << endl; 
-    delete game;
+    game->test_flipStack(player);
+    game->test_renderStacks();
     return 0;
 }
