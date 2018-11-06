@@ -10,56 +10,6 @@ using namespace std;
 
 void printVector(vector<int> output);
 
-// temp main for testing...
-//int main() {
-//	// expected next move is 5,4,2,1,3
-//	// expected next move is 5,4,3,1,2
-//	AI_Player* my_player = new AI_Player();
-//
-//	vector<int> stack1 = {5, 4, 2, 3, 1};
-//	my_player->setStack(stack1);
-//	vector<int> output1 = my_player->searchAndGenerateNewMove(5);
-//	cout << "result: ";
-//	printVector(output1);
-//
-//	stack1 = {5, 4, 1, 3,2};
-//	my_player->setStack(stack1);
-//	output1 = my_player->searchAndGenerateNewMove(5);
-//	cout << "result: ";
-//	printVector(output1);
-//
-//	stack1 = {5, 4, 1, 2, 3};
-//	my_player->setStack(stack1);
-//	output1 = my_player->searchAndGenerateNewMove(5);
-//	cout << "result: ";
-//	printVector(output1);
-//
-//	stack1 = {5, 4, 3, 2, 1};
-//	my_player->setStack(stack1);
-//	output1 = my_player->searchAndGenerateNewMove(5);
-//	cout << "result: ";
-//	printVector(output1);
-//
-//	cout << endl << endl << endl;
-//	vector<int> stack2 = {5, 4, 2, 1, 3};
-//	my_player->setStack(stack2);
-//	vector<int> output2 = my_player->searchAndGenerateNewMove(5);
-//	cout << "result: ";
-//	printVector(output2);
-//
-//	stack2 = {5, 4, 3, 1, 2};
-//	my_player->setStack(stack2);
-//	output2 = my_player->searchAndGenerateNewMove(5);
-//	cout << "result: ";
-//	printVector(output2);
-//
-//	stack2 = {5, 4, 3, 2,1};
-//	my_player->setStack(stack2);
-//	output2 = my_player->searchAndGenerateNewMove(5);
-//	cout << "result: ";
-//	printVector(output2);
-//}
-
 void printVector(vector<int> output) {
 	for(int i = 0; i < output.size(); i++) {
 		cout << output[i] << " ";
@@ -117,14 +67,48 @@ vector<int> AI_Player::determineNextMove(Node* finalNode) {
   }
   Node *current = finalNode;
   while (current->parent->stack != this->stack) {
-    printVector(current->stack);
     current = current->parent;
   }
-  printVector(current->stack);
-  cout << "current stack ";
-  printVector(this->stack);
-  //printVector(prev->stack);
-  //cout << prev->sortedness << endl;
   return current->stack;
 }
+
+int AI_Player::test_searchAndGenerateNewMove() {
+	int numPassed = 0;
+
+	vector<int> stack = {5, 4, 2, 3, 1};
+	vector<int> expected = {5, 4, 1, 3, 2};
+	this->setStack(stack);
+	vector<int> output = this->searchAndGenerateNewMove(5);
+	if (output == expected) {
+		cout << "Test (1) of test_searchAndGenerateNewMove == PASSED" << endl;
+		numPassed += 1;
+	} else {
+		cout << "Test (1) of test_searchAndGenerateNewMove == FAILED" << endl;
+	}
+
+	stack = {5, 4, 1, 3, 2};
+	expected = {5, 4, 1, 2, 3};
+	this->setStack(stack);
+	output = this->searchAndGenerateNewMove(5);
+	if (output == expected) {
+		cout << "Test (2) of test_searchAndGenerateNewMove == PASSED" << endl;
+		numPassed += 1;
+	} else {
+		cout << "Test (2) of test_searchAndGenerateNewMove == FAILED" << endl;
+	}
+
+	stack = {5, 4, 2, 1, 3};
+	expected = {5, 4, 3, 1, 2};
+	this->setStack(stack);
+	output = this->searchAndGenerateNewMove(5);
+	if (output == expected) {
+		cout << "Test (3) of test_searchAndGenerateNewMove == PASSED" << endl;
+		numPassed += 1;
+	} else {
+		cout << "Test (3) of test_searchAndGenerateNewMove == FAILED" << endl;
+	}
+
+	return numPassed;
+}
+
 
