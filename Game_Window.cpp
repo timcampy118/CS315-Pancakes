@@ -305,13 +305,13 @@ int Game_Window::selectPancake(int size){
 vector<int> Game_Window::makeStartVec(int size, string msg){
 
 	vector<int> order, newOrder, random;
-        for(int x=0; x<size; x++) {order.push_back(x+1);}
+        for(int x=0; x<size+1; x++) {order.push_back(x);}
 
 	while((int)newOrder.size()!=size) {
                 int index=chooseNumbersSetup(order,msg);
                 if(index==0) {
                         for(int x=0; x<size; x++)
-                random.push_back(x);
+                random.push_back(x+1);
                 random_shuffle(random.begin(), random.end());
                         return random;
                 } else {
