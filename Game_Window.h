@@ -34,9 +34,10 @@ class Game_Window {
 		void printPancakes(int x, int y);
 		vector<int> displaySetupScreen(int size);
 		vector<int> makeStartVec(int size, string msg);
+		void drawBottomHumanPancake(int pancakeSize, int playerStackSize);
 		void renderStacks(vector<int> playerStack, vector<int> aiStack);
-		void drawHumanPancake(int x, int pancakeSize);
-		void drawAiPancake(int size);
+		void drawHumanPancake(int x, int pancakeSize, int playerStackSize);
+		void drawAiPancake(int x, int pancakeSize, int aiStackSize);
 		void printMenu(WINDOW *menu_win, int highlight, vector<std::string> choices);
 		void getInitials(Player& player);
 		void printHighScores(vector<string> entry, Player player);

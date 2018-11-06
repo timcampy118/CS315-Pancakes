@@ -38,19 +38,12 @@ void Game::pregameProcedures() {
 void Game::play(){
 
 	//flipStackTest(player);
-	renderStacksTest();
-	/*
+
 	pregameProcedures();
-	int indexInput;
-	player.setStack(v);
-	window.renderStacks(player.getStack(), computer.getStack());
-	indexInput = window.selectPancake(player.getStack().size());
-	flipStack(player,indexInput);
-	window.renderStacks(player.getStack(), computer.getStack());
-	indexInput = window.selectPancake(player.getStack().size());
-	//flipStack(player,3);
-	*/
-/*	bool keepPlaying = true;
+//	renderStacksTest();
+//	flipStackTest(player);
+	
+	bool keepPlaying = true;
 	bool anyWinners = false;
 	bool toPlayAgain = false;
 	pregameProcedures();
@@ -60,16 +53,12 @@ void Game::play(){
 		}
 		int indexInput;
 		//player.setStack(test);
-		window.renderStacks(player.getStack(), computer.getStack());
-		indexInput = window.selectPancake(player.getStack().size());
-		//player.setStack(test1);
-		//window.renderStacks(player.getStack(), computer.getStack());
-		//indexInput = window.selectPancake(player.getStack().size());
-		
-		//indexInput = window.selectPancake(player.getStack().size());
-		
-		//indexInput = window.getUserInput(player.getStack().size()) //new function
-		flipStack(player,indexInput);
+
+	window.renderStacks(player.getStack(), computer.getStack());
+	indexInput = window.selectPancake(player.getStack().size());
+	player = flipStack(player,indexInput);
+
+
 		anyWinners = isWinner();
 		if (anyWinners) {
 			determineWinnerInfo(keepPlaying);
@@ -79,9 +68,7 @@ void Game::play(){
 		//break;	
 
 	}
-	// window.getInitials(player);
-    // window.printHighScores(highscoreRows, player);
-    */
+	
 }
 
 //determines the score and prints the appropriate information 
@@ -205,7 +192,7 @@ cout<<"expected output 1 2 3 4 5"<<endl;
 }
 
 
-void Game::flipStack(Player player, int index) {
+Player Game::flipStack(Player player, int index) {
 
 
 //reverse(player.getStack().begin(),player.getStack().begin()+index);
@@ -224,11 +211,13 @@ void Game::flipStack(Player player, int index) {
 
 	player.setStack(tmpStack);
 
+	return player;
 
+/*
 	for(int x=0; x<player.getStack().size(); x++)
 		cout<<player.getStack()[x]<<" ";
 	cout<<endl;	
-	
+*/	
 }
 
 //reads in the highscores.txt

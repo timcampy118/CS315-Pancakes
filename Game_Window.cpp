@@ -56,7 +56,7 @@ void Game_Window::displayStartScreen(){
         mvprintw(rows-1, 0, "Jack Shirley, Jay Khatri, Zackary Ramirez, Timothy Nguyen");
         refresh();
 
-        my_win = create_newwin(HEIGHT, WIDTH, (rows/2) - 3, (cols/2)-25);
+        my_win = create_newwin(5, 25, (rows/2) - 3, (cols/2)-25);
         keypad(my_win,true);
         while(true){
                 wattron(my_win, A_BLINK);
@@ -247,7 +247,7 @@ int Game_Window::selectPancake(int size){
  	getmaxyx(stdscr,row,col);
 //asdf
 	int inputChar;
-	int currentChoice=1;
+	int currentChoice=0;
 	int oldChoice;
 	while(true)
 	{	
@@ -269,12 +269,12 @@ int Game_Window::selectPancake(int size){
 				}
 				break;
 			case 10:{
-				for(int x=currentChoice-1; x<flipVec.size(); x++)
+				for(int x=currentChoice; x<flipVec.size(); x++)
 					wattron(flipVec[x], A_BLINK);
-				usleep(3000000);
-				for(int x=currentChoice-1; x<flipVec.size(); x++)
+				usleep(1000000);
+				for(int x=currentChoice; x<flipVec.size(); x++)
 					wattroff(flipVec[x], A_BLINK);
-				return currentChoice-1;
+				return currentChoice;
 				break;
 			default:
 				mvprintw(24, 0, "Invalid key entered, please use the up down error and enter");
@@ -322,42 +322,62 @@ vector<int> Game_Window::makeStartVec(int size, string msg){
         return newOrder;
 }
 
-
 void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
 	
 	int rows, cols = 0, choice = 0;
 
-        clear();
-		
-	//cout << "PSTACK SIZE: " << playerStack.size() << endl;
-
-
+    clear();
 	
 	int playerStackSize = playerStack.size();
 	int aiStackSize = aiStack.size();
 	
+	printPancakes(0,0);
+	
 	for(int x = 0; x < playerStackSize; x++){
-		drawHumanPancake(x, playerStack.at(x));	
+		drawHumanPancake(x, playerStack.at(x), playerStackSize);	
 	}
+	
+	drawBottomHumanPancake(playerStack.at(0), playerStackSize);
+	
+	for(int x = 0; x < playerStackSize; x++){
+		drawAiPancake(x, aiStack.at(x), aiStackSize);	
+	}
+	
 	refresh();
 }
 
 
-void Game_Window::drawHumanPancake(int x, int pancakeSize){
+void Game_Window::drawBottomHumanPancake(int pancakeSize, int playerStackSize){
 	WINDOW* my_win;
-	my_win = newwin(3, pancakeSize * 2+5, HEIGHT - (x * 3) - 4, 0);
+	my_win = newwin(3, pancakeSize * 2+3, HEIGHT - 4, ((playerStackSize*2 - (pancakeSize*2)) / 2) +1 );
 	wborder(my_win, '|', '|', '-', '-', '+', '+', '+', '+');
 	string str = to_string(pancakeSize);
-	mvwprintw(my_win, 1, pancakeSize, str.c_str());
+	mvwprintw(my_win, 1, pancakeSize+1, str.c_str());
 	wrefresh(my_win);
-	refresh();	
+	refresh();
+}
 
+
+void Game_Window::drawHumanPancake(int x, int pancakeSize, int playerStackSize){
+	WINDOW* my_win;
+	my_win = newwin(3, pancakeSize * 2+3, HEIGHT - (x * 3) - 4, ((playerStackSize*2 - (pancakeSize*2)) / 2) +1 );
+	wborder(my_win, '|', '|', '-', '-', '+', '+', '+', '+');
+	string str = to_string(pancakeSize);
+	mvwprintw(my_win, 1, pancakeSize+1, str.c_str());
+	wrefresh(my_win);
+	refresh();
 	flipVec.push_back(my_win);
 }
 
 
-void Game_Window::drawAiPancake(int size){
-
+void Game_Window::drawAiPancake(int x, int pancakeSize, int aiStackSize){
+	WINDOW* my_win;
+	my_win = newwin(3, pancakeSize * 2+3, HEIGHT - (x * 3) - 4, ((aiStackSize*2 - (pancakeSize*2)) / 2) + 35 );
+	wborder(my_win, '|', '|', '-', '-', '+', '+', '+', '+');
+	string str = to_string(pancakeSize);
+	mvwprintw(my_win, 1, pancakeSize+1, str.c_str());
+	wrefresh(my_win);
+	refresh();
 }
 
 
