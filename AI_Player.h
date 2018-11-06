@@ -17,6 +17,7 @@ class AI_Player {
 
 	std::vector<int> determineNextMove(Node* finalNode);
 	vector<int> searchAndGenerateNewMove(int maxDepth);
+	int test_searchAndGenerateNewMove();
 };
 
 #endif

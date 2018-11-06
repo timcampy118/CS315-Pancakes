@@ -30,5 +30,8 @@ test: Game.o Game_Window.o Player.o AI_Player.o search_node.o test_main.o
 run:
 	./pancakes
 
+run-test:
+	./test
+
 clean:
 	rm *.o test pancakes
