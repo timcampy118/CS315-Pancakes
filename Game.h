@@ -25,7 +25,7 @@ class Game {
         void renderStacksTest();
         bool isWinner(Player playr, AI_Player comp);
         int getWinner(Player playr, AI_Player comp);
-        void calculatePlayerScore(int winner);
+        void calculatePlayerScore(Player& play, int winner, int pancakes, int difficultt);
         void pregameProcedures();
         void determineWinnerInfo(bool &shouldPlay);
 
@@ -35,6 +35,7 @@ class Game {
         int test_readHighScores();
         int test_getWinner();
         int test_isWinner();
+        int test_calculatePlayerScore();
 };
 
 #endif

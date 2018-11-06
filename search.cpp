@@ -22,14 +22,16 @@ int main() {
 }
 
 void printVector(vector<int> input) {
-  for(int i=0; i<input.size(); ++i) {
+  int size = input.size();
+  for(int i=0; i< size; ++i) {
     std::cout << input[i] << ' ';
   }
   std::cout << "\n";
 }
 
 void printNestedVector(vector<vector<int> > input) {
-  for(int i=0; i<input.size(); ++i) {
+  int size = input.size();
+  for(int i=0; i < size; ++i) {
     printVector(input[i]);
   }
 }
@@ -52,7 +54,8 @@ vector<int> searchAndGenerateNewMove(vector<int> stack, int maxDepth) {
 
     // generate successors
     vector<Node *> successors = currentNode->successors();
-    for (int j = 0; j < successors.size(); j++) {
+    int size = successors.size();
+    for (int j = 0; j < size; j++) {
       Node *successor = successors[j];
       if (successor->sortedness < bestNode->sortedness) {
         bestNode = successor;

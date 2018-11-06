@@ -60,7 +60,7 @@ void Game::play(){
 void Game::determineWinnerInfo(bool &shouldPlay) {
 	int winner = 0;
 	winner = getWinner(player, computer);
-	calculatePlayerScore(winner);
+	calculatePlayerScore(player, winner, numOfPancakes, diff);
 	window.printEndMessage(winner, player);
 	window.printHighScores(highscoreRows, player);
 	printHighScores(player);
@@ -69,24 +69,24 @@ void Game::determineWinnerInfo(bool &shouldPlay) {
 }
 
 //calculates the palyers score based on the difficulty
-void Game::calculatePlayerScore(int winner) {
+void Game::calculatePlayerScore(Player& play, int winner, int pancakes, int difficultt) {
 	int scor = 0;
 	switch(winner) {
 		case 1:		//player has sorted stack and computer does not 
-			scor = 2 * numOfPancakes * (diff + 1);
-			player.setScore(scor);
+			scor = 2 * pancakes * (difficultt+ 1);
+			play.setScore(scor);
 			break;	
 		case 2:		//computer is sorted, but the player is not 
-			scor = numOfPancakes;
-			player.setScore(scor);
+			scor = pancakes;
+			play.setScore(scor);
 			break;
 		case 3:		//both stacks are sorted
-			scor = numOfPancakes * (diff + 1);
-			player.setScore(scor);
+			scor = pancakes * (difficultt + 1);
+			play.setScore(scor);
 			break;
 		default:	//shouldn't ever get to here but prep
 			scor = 1;
-			player.setScore(scor);
+			play.setScore(scor);
 		break;
 	}
 }
@@ -323,3 +323,41 @@ int Game::test_isWinner() {
 	}
 }
 
+
+int Game::test_calculatePlayerScore() {
+	int expected1 = 1, expected2 = 2, expected3 = 3;
+	int expectedScore1 = 24, expectedScore2 = 3, expectedScore3 = 12;
+	int dif = 3, cakes = 3;
+	int actual;
+	int passedTest = 0;
+	Player test_player;
+	calculatePlayerScore(test_player, expected1, cakes, dif);
+	actual = test_player.getScore();
+	if (expectedScore1 == actual) {
+		cout << "Test (1) of test_calculatePlayerScore == PASSED" << endl;
+		passedTest++;
+	}
+	else {
+		cout << "Test (1) of test_calculatePlayerScore == FAILED" << endl;
+	}
+
+	calculatePlayerScore(test_player, expected2, cakes, dif);
+	actual = test_player.getScore();
+	if (expectedScore2 == actual) {
+		cout << "Test (2) of test_calculatePlayerScore == PASSED" << endl;
+		passedTest++;
+	}
+	else {
+		cout << "Test (2) of test_calculatePlayerScore == FAILED" << endl;
+	}
+	calculatePlayerScore(test_player, expected3, cakes, dif);
+	actual = test_player.getScore();
+	if (expectedScore3 == actual) {
+		cout << "Test (3) of test_calculatePlayerScore == PASSED" << endl;
+		passedTest++;
+	}
+	else {
+		cout << "Test (3) of test_calculatePlayerScore == FAILED" << endl;
+	}
+	return passedTest;
+}
