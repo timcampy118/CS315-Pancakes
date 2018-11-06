@@ -36,54 +36,25 @@ void Game::pregameProcedures() {
 }
 
 void Game::play(){
-
-<<<<<<< HEAD
-=======
-	//flipStackTest(player);
-
-	pregameProcedures();
-//	renderStacksTest();
-//	flipStackTest(player);
-	
->>>>>>> 6de3ca85e62e769acc2e8bd886617805a47cfe40
 	bool keepPlaying = true;
 	bool anyWinners = false;
 	bool toPlayAgain = false;
 	pregameProcedures();
 	while(keepPlaying){
 		if(toPlayAgain){
+			toPlayAgain = false;
 			pregameProcedures();
 		}
 		int indexInput;
-<<<<<<< HEAD
 		window.renderStacks(player.getStack(), computer.getStack());
 		indexInput = window.selectPancake(player.getStack().size());
-		flipStack(player,indexInput);
-=======
-		//player.setStack(test);
-
-	window.renderStacks(player.getStack(), computer.getStack());
-	indexInput = window.selectPancake(player.getStack().size());
-	player = flipStack(player,indexInput);
-
-
->>>>>>> 6de3ca85e62e769acc2e8bd886617805a47cfe40
+		player = flipStack(player,indexInput);
 		anyWinners = isWinner();
 		if (anyWinners) {
 			determineWinnerInfo(keepPlaying);
 			toPlayAgain = player.getPlayAgainAns();
 		}
-		
-		//break;	
-
 	}
-<<<<<<< HEAD
-	// window.getInitials(player);
-    // window.printHighScores(highscoreRows, player);
-    
-=======
-	
->>>>>>> 6de3ca85e62e769acc2e8bd886617805a47cfe40
 }
 
 //determines the score and prints the appropriate information 
@@ -207,9 +178,6 @@ void Game::flipStackTest(Player player){
 }
 
 
-<<<<<<< HEAD
-void Game::flipStack(Player player, int index) {
-=======
 Player Game::flipStack(Player player, int index) {
 
 
@@ -219,7 +187,6 @@ Player Game::flipStack(Player player, int index) {
 		cout<<player.getStack()[x];
 	cout<<endl;
 */
->>>>>>> 6de3ca85e62e769acc2e8bd886617805a47cfe40
 	
 	vector<int> tmpStack;
 	for(int x=0; x<index;x++)
