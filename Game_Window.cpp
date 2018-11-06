@@ -11,6 +11,9 @@
 #include <string.h>
 #include "Player.h"
 #include <unistd.h>
+#include <sstream>
+#include <ostream>
+#include <algorithm>
 
 #define WIDTH 80
 #define HEIGHT 40 
@@ -245,7 +248,7 @@ int Game_Window::selectPancake(int size){
 	int row,col;
 	//repetitiveWindowCommandsEcho();
  	getmaxyx(stdscr,row,col);
-
+//asdf
 	int inputChar;
 	int currentChoice=1;
 	int oldChoice;
@@ -305,7 +308,7 @@ int Game_Window::selectPancake(int size){
 vector<int> Game_Window::makeStartVec(int size, string msg){
 
 	vector<int> order, newOrder, random;
-        for(int x=0; x<size+1; x++) {order.push_back(x);}
+        for(int x=0; x<size; x++) {order.push_back(x+1);}
 
 	while((int)newOrder.size()!=size) {
                 int index=chooseNumbersSetup(order,msg);
@@ -327,17 +330,8 @@ void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
 	
 	int rows, cols = 0, choice = 0;
 
-	WINDOW *my_win;
-
-	initscr();
         clear();
-        noecho();
-        cbreak();
-	
-	//mvprintw(7, 0, "Team Teamwork (18)");
-	
-	refresh();	
-	
+		
 	//cout << "PSTACK SIZE: " << playerStack.size() << endl;
 
 
@@ -346,38 +340,20 @@ void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
 	int aiStackSize = aiStack.size();
 	
 	for(int x = 0; x < playerStackSize; x++){
-		drawHumanPancake(x, playerStack.at(x)+1);	
+		drawHumanPancake(x, playerStack.at(x));	
 	}
-
-//	while(true){
-//		choice = wgetch(my_win);
-//		if(choice == 10){
-//			break;
-//		}
-//		wrefresh(my_win);
-//	}
-//	endwin();
-
-	/*
-	for(int y = 0; y < aiStackSize; y++){
-		drawAiPancake(y);
-	}
-	*/
-	//getch();
-	
-
-//	refresh();
+	refresh();
 }
 
 
 void Game_Window::drawHumanPancake(int x, int pancakeSize){
 	WINDOW* my_win;
-	my_win = newwin(3, pancakeSize * 2+1, HEIGHT - (x * 3) - 4, 0);
+	my_win = newwin(3, pancakeSize * 2+3, HEIGHT - (x * 3) - 4, 0);
 	wborder(my_win, '|', '|', '-', '-', '+', '+', '+', '+');
 	string str = to_string(pancakeSize);
 	mvwprintw(my_win, 1, pancakeSize, str.c_str());
 	wrefresh(my_win);
-	
+	refresh();
 	flipVec.push_back(my_win);	
 }
 
@@ -394,6 +370,11 @@ WINDOW* Game_Window::create_newwin(int height, int width, int starty, int startx
     box(local_win, 0 , 0);
     wrefresh(local_win);
 	return local_win;
+}
+
+void destroyWindow(){
+	endwin();
+	refresh();
 }
 
 void Game_Window::printMenu(WINDOW *menu_win, int highlight, vector<std::string> choices)

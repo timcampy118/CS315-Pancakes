@@ -45,7 +45,7 @@ class Game_Window {
 		int selectPancake(int size);	
 		void playAgain(Player& playr);
 		void printEndMessage(int winner, Player& playr);
-	
+		void destroyWindow();	
 };
 
 #endif
