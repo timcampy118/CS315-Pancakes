@@ -21,7 +21,9 @@ int main() {
     testsPassed += game->test_calculatePlayerScore(); // this one has three tests in it 
     cout << endl;
     cout << testsPassed << " of " << numOfTests << " tests passed... Done." << endl; 
-    game->test_flipStack(player);
-    game->test_renderStacks();
+
+
+    // game->test_flipStack(player);
+    // game->>test_renderStacks();
     return 0;
 }
