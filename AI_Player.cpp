@@ -30,6 +30,8 @@ vector<int> AI_Player::searchAndGenerateNewMove(int maxDepth) {
   queue.push(new Node(stack));
   Node *bestNode = queue.front();
   std::unordered_set<std::string> visited;
+  std::vector<Node*> all_nodes;
+  all_nodes.push_back(queue.front());
   bool best_sort_possible = false;
   while (!queue.empty() && !best_sort_possible) {
     // Get the top() element from the queue and remove it.
@@ -42,8 +44,11 @@ vector<int> AI_Player::searchAndGenerateNewMove(int maxDepth) {
       visited.insert(currentNode->toString());
     }
 
-    // generate successors
+    // generate successors.
     vector<Node *> successors = currentNode->successors();
+    vector<Node *> to_insert = successors;
+    all_nodes.insert(all_nodes.end(), to_insert.begin(), to_insert.end());
+    
     for (int j = 0; j < successors.size(); j++) {
       Node *successor = successors[j];
       if (successor->sortedness < bestNode->sortedness) {
@@ -58,6 +63,9 @@ vector<int> AI_Player::searchAndGenerateNewMove(int maxDepth) {
   }
   std::vector<int> result = determineNextMove(bestNode);
   this->stack = result;
+  for (int i =0; i< all_nodes.size();i++){
+     delete (all_nodes[i]);
+   } 
   return result;
 }
 
