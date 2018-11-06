@@ -12,7 +12,7 @@ int main() {
     Player player = Player();
     Game_Window window = Game_Window();
     int testsPassed = 0;
-    int numOfTests = 6;
+    int numOfTests = 9;
 
     //AI Player class tests
     testsPassed += computer.test_searchAndGenerateNewMove();
