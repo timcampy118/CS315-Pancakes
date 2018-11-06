@@ -35,12 +35,20 @@ void Game::pregameProcedures() {
 }
 
 void Game::play(){
-	vector<int> test;
-	test.push_back(3);
-	test.push_back(1);
-	test.push_back(0);
-	test.push_back(2);
-	bool keepPlaying = true;
+
+	flipStackTest(player);
+	/*
+	pregameProcedures();
+	int indexInput;
+	player.setStack(v);
+	window.renderStacks(player.getStack(), computer.getStack());
+	indexInput = window.selectPancake(player.getStack().size());
+	flipStack(player,indexInput);
+	window.renderStacks(player.getStack(), computer.getStack());
+	indexInput = window.selectPancake(player.getStack().size());
+	//flipStack(player,3);
+	*/
+/*	bool keepPlaying = true;
 	bool anyWinners = false;
 	bool toPlayAgain = false;
 	pregameProcedures();
@@ -49,10 +57,14 @@ void Game::play(){
 			pregameProcedures();
 		}
 		int indexInput;
+		//player.setStack(test);
 		window.renderStacks(player.getStack(), computer.getStack());
 		indexInput = window.selectPancake(player.getStack().size());
-		window.renderStacks(test, test);
-		indexInput = window.selectPancake(player.getStack().size());
+		//player.setStack(test1);
+		//window.renderStacks(player.getStack(), computer.getStack());
+		//indexInput = window.selectPancake(player.getStack().size());
+		
+		//indexInput = window.selectPancake(player.getStack().size());
 		
 		//indexInput = window.getUserInput(player.getStack().size()) //new function
 		flipStack(player,indexInput);
@@ -63,9 +75,11 @@ void Game::play(){
 		}
 		
 		//break;	
+
 	}
 	// window.getInitials(player);
     // window.printHighScores(highscoreRows, player);
+    */
 }
 
 //determines the score and prints the appropriate information 
@@ -138,9 +152,74 @@ int Game::getWinner() {
 
 
 
+void Game::flipStackTest(Player player){
+
+vector<int> v;
+v.push_back(1);
+v.push_back(2);
+v.push_back(3);
+v.push_back(4);
+
+player.setStack(v);
+flipStack(player,2);
+cout<<"expected output 1 2 4 3"<<endl;
+
+
+vector<int> u;
+u.push_back(5);
+u.push_back(6);
+u.push_back(7);
+u.push_back(8);
+u.push_back(9);
+u.push_back(4);
+
+
+player.setStack(u);
+flipStack(player,4);
+cout<<"expected output 5 6 7 8 4 9"<<endl;
+
+
+vector<int> x;
+x.push_back(1);
+x.push_back(2);
+x.push_back(3);
+x.push_back(4);
+x.push_back(5);
+x.push_back(6);
+
+
+player.setStack(x);
+flipStack(player,0);
+cout<<"expected output 6 5 4 3 2 1"<<endl;
+
+
+}
+
 
 void Game::flipStack(Player player, int index) {
-	reverse(player.getStack().begin(),player.getStack().begin()+index);
+
+
+//reverse(player.getStack().begin(),player.getStack().begin()+index);
+/*
+	for(int x=0; x<player.getStack().size(); x++)
+		cout<<player.getStack()[x];
+	cout<<endl;
+*/
+	
+	vector<int> tmpStack;
+	for(int x=0; x<index;x++)
+		tmpStack.push_back(player.getStack()[x]);	
+	
+	for(int x=player.getStack().size()-1; x>=index; x--)
+		tmpStack.push_back(player.getStack()[x]);
+
+	player.setStack(tmpStack);
+
+
+	for(int x=0; x<player.getStack().size(); x++)
+		cout<<player.getStack()[x]<<" ";
+	cout<<endl;	
+	
 }
 
 //reads in the highscores.txt

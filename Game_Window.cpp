@@ -345,13 +345,14 @@ void Game_Window::renderStacks(vector<int> playerStack, vector<int> aiStack){
 
 void Game_Window::drawHumanPancake(int x, int pancakeSize){
 	WINDOW* my_win;
-	my_win = newwin(3, pancakeSize * 2+3, HEIGHT - (x * 3) - 4, 0);
+	my_win = newwin(3, pancakeSize * 2+5, HEIGHT - (x * 3) - 4, 0);
 	wborder(my_win, '|', '|', '-', '-', '+', '+', '+', '+');
 	string str = to_string(pancakeSize);
 	mvwprintw(my_win, 1, pancakeSize, str.c_str());
 	wrefresh(my_win);
-	refresh();
-	flipVec.push_back(my_win);	
+	refresh();	
+
+	flipVec.push_back(my_win);
 }
 
 

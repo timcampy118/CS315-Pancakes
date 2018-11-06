@@ -21,6 +21,7 @@ class Game {
         vector<Player> fillPlayerVector();
         vector<string> readHighScores(string file);
 	void flipStack(Player player, int index);
+    void flipStackTest(Player player);
         bool isWinner();
         int getWinner();
         void calculatePlayerScore(int winner);
