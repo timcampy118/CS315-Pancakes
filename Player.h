@@ -11,7 +11,7 @@ class Player {
         vector<int> stack;
         string initials;
         int score;
-        bool toPlayAgain = false;
+        bool toPlayAgain;
     public:
         Player() {
             initials = "NA";

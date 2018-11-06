@@ -42,17 +42,18 @@ void Game::play(){
 	pregameProcedures();
 	while(keepPlaying){
 		if(toPlayAgain){
-			toPlayAgain = false;
 			pregameProcedures();
+			toPlayAgain = false;
 		}
 		int indexInput;
 		window.renderStacks(player.getStack(), computer.getStack());
 		indexInput = window.selectPancake(player.getStack().size());
 		player = flipStack(player,indexInput);
+		computer.searchAndGenerateNewMove(options.difficultyLevel);
 		anyWinners = isWinner(player, computer);
 		if (anyWinners) {
 			determineWinnerInfo(keepPlaying);
-			toPlayAgain = player.getPlayAgainAns();
+			toPlayAgain = !player.getPlayAgainAns();
 		}
 	}
 }
