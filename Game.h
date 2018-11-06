@@ -23,7 +23,7 @@ class Game {
 	Player flipStack(Player player, int index);
     void flipStackTest(Player player);
     void renderStacksTest();
-        bool isWinner();
+        bool isWinner(Player playr, AI_Player comp);
         int getWinner(Player playr, AI_Player comp);
         void calculatePlayerScore(int winner);
         void pregameProcedures();

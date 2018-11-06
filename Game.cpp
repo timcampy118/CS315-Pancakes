@@ -49,7 +49,7 @@ void Game::play(){
 		window.renderStacks(player.getStack(), computer.getStack());
 		indexInput = window.selectPancake(player.getStack().size());
 		player = flipStack(player,indexInput);
-		anyWinners = isWinner();
+		anyWinners = isWinner(player, computer);
 		if (anyWinners) {
 			determineWinnerInfo(keepPlaying);
 			toPlayAgain = player.getPlayAgainAns();
@@ -94,9 +94,11 @@ void Game::calculatePlayerScore(int winner) {
 
 //determines if either player has won
 // can write a test for this 
-bool Game::isWinner() {
+bool Game::isWinner(Player playr, AI_Player comp) {
 	bool playerSorted = false, computerSorted = false;
-	vector<int> playerStac = player.getStack(), compStac = computer.getStack();
+	vector<int> playerStac = playr.getStack(), compStac = comp.getStack();
+	reverse(playerStac.begin(),playerStac.end());
+	reverse(compStac.begin(),compStac.end());
 	playerSorted = is_sorted(playerStac.begin(), playerStac.end());
 	computerSorted = is_sorted(compStac.begin(), compStac.end());
 	if (playerSorted == true || computerSorted == true) {
@@ -111,6 +113,8 @@ bool Game::isWinner() {
 int Game::getWinner(Player playr, AI_Player comp) {
 	bool playerSorted = false, computerSorted = false;
 	vector<int> playerStac = playr.getStack(), compStac = comp.getStack();
+	reverse(playerStac.begin(),playerStac.end());
+	reverse(compStac.begin(),compStac.end());
 	playerSorted = is_sorted(playerStac.begin(), playerStac.end());
 	computerSorted = is_sorted(compStac.begin(), compStac.end());
 	if (playerSorted == true && computerSorted == false) {
