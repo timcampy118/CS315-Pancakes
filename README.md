@@ -11,5 +11,3 @@ To run the game:
 To compile and run the tests, run the following commands:  
     "make test" and "./test"
 
-
-https://github.tamu.edu/jaykhatri/315-p2-team18/wiki/Development-Log
